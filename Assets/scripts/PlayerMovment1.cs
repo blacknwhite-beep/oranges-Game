@@ -5,7 +5,8 @@ public class PlayerMovment1 : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Rigidbody2D playerRb;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField]private float speed = 5f;
+    [SerializeField] private float speed = 5f;
+    [SerializeField] private Animator _animator;
     // Stores the X and Y distances the player will move in a single frame
     private Vector2 movement;
     // Stores the X and Y world space coordinates of the camera's edges
@@ -63,5 +64,13 @@ public class PlayerMovment1 : MonoBehaviour
         // Calculates distance to move: direction * speed * time since last frame
         movement.x = input * speed * Time.deltaTime;
         transform.Translate(movement);
+        if (input != 0) 
+        {
+            _animator.SetBool("isRunning", true);
+        }
+        else
+        {
+            _animator.SetBool("isRunning",false);
+        }
     }
 }
