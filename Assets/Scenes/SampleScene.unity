@@ -1883,7 +1883,7 @@ Animator:
   m_GameObject: {fileID: 2046417066}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2a021ed2b3e9b65449e11562b46b69d2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 456fe7dd049516341b3efdffa4ae835c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2047,8 +2047,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovment1
   playerRb: {fileID: 2046417071}
+  spriteRenderer: {fileID: 2046417068}
   speed: 10
-  input: 0
+  _animator: {fileID: 2046417067}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
