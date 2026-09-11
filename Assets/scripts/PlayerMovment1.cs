@@ -59,18 +59,24 @@ public class PlayerMovment1 : MonoBehaviour
 
     private void HandleMovement()
     {
-        // Listens for A/D or Left/Right Arrow keys. Returns -1 (left), 1 (right), or 0 (no input)
+        // Locks rotation directly in code so the physics engine cannot tilt the character
+        playerRb.freezeRotation = true;
+
         float input = Input.GetAxisRaw("Horizontal");
-        // Calculates distance to move: direction * speed * time since last frame
-        movement.x = input * speed * Time.deltaTime;
+
+        // Explicitly sets the Y value to 0 to prevent erratic vertical flying
+        movement = new Vector2(input * speed * Time.deltaTime, 0);
         transform.Translate(movement);
-        if (input != 0) 
+
+        if (input != 0)
         {
             _animator.SetBool("isRunning", true);
+            // Replaces your buggy FlipCharacterX logic to stop the rapid visual flickering
+            spriteRenderer.flipX = input < 0;
         }
         else
         {
-            _animator.SetBool("isRunning",false);
+            _animator.SetBool("isRunning", false);
         }
     }
 }
