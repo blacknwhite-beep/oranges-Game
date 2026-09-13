@@ -18,7 +18,7 @@ public class playerJump : MonoBehaviour
     {
        
         Debug.DrawRay(transform.position, Vector2.down * 1.5f, Color.red);
-        if (Input.GetButtonDown("Jump") && GetIsGrounded())
+        if (Input.GetKeyDown(KeyCode.Space) && GetIsGrounded())
         {
             Jump();
         }
