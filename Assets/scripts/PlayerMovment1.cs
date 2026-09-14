@@ -27,9 +27,11 @@ public class PlayerMovment1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        input = Input.GetAxisRaw("Horizontal");
+        HandleMovement();
+        ClampMovement();
+        FlipCharacterX();
     }
-    void FixedUpdate()
+    private void FlipCharacterX()
     {
         float input = Input.GetAxisRaw("Horizontal");
         if (input > 0 && (transform.position.x > xPosLastFrame))
