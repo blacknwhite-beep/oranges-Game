@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4395717977622235603}
   - component: {fileID: 1475112012848338952}
   - component: {fileID: 5896705062367507387}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Biker_run_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -305812631
-  m_SortingLayer: 1
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3496671922872121163, guid: 33ebf4fd033f6814a8a3fbb2678ac976, type: 3}
@@ -134,7 +134,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 4.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerJump
   Rb2D: {fileID: 5938381168928222605}
-  jumpForce: 5
+  jumpForce: 20
   _animator: {fileID: 9043869164248395112}
 --- !u!114 &5896705062367507387
 MonoBehaviour:

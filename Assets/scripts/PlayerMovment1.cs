@@ -14,8 +14,13 @@ public class PlayerMovment1 : MonoBehaviour
     // Stores exactly half the width of the player's sprite image
     private float playerHalfWidth;
     private float xPosLastFrame;
+
+    
     private void Start()
     {
+        
+
+
         // Converts the literal pixel dimensions of the screen into Unity's internal world coordinate system
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         // Grabs the SpriteRenderer attached to this object and gets the distance from its center point to its outer edge
@@ -79,4 +84,6 @@ public class PlayerMovment1 : MonoBehaviour
             _animator.SetBool("isRunning", false);
         }
     }
+
+    
 }
