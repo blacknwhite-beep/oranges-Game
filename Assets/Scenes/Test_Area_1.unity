@@ -3033,9 +3033,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af07d4dfda0af814281b8b0c4d30a00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveSpeed: 2
-  maxTimeMovingLeft: 3
-  maxTimeMovingRight: 60
 --- !u!136 &921218321
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3304,9 +3301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af07d4dfda0af814281b8b0c4d30a00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveSpeed: 2
-  maxTimeMovingLeft: 5
-  maxTimeMovingRight: 60
 --- !u!136 &944755847
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4524,6 +4518,7 @@ MonoBehaviour:
   Rb2D: {fileID: 1382961530}
   jumpForce: 5
   _animator: {fileID: 1382961531}
+  doubleJumpForce: 5
 --- !u!70 &1382961529
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -4716,9 +4711,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af07d4dfda0af814281b8b0c4d30a00f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  moveSpeed: 5
-  maxTimeMovingLeft: 2
-  maxTimeMovingRight: 60
 --- !u!136 &1397970132
 CapsuleCollider:
   m_ObjectHideFlags: 0

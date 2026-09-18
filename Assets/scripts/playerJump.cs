@@ -5,6 +5,9 @@ public class playerJump : MonoBehaviour
     [SerializeField] private Rigidbody2D Rb2D;
     [SerializeField] private float jumpForce = 5;
     [SerializeField] private Animator _animator;
+    [SerializeField] private float doubleJumpForce;
+    private bool canDoubleJump;
+    private bool isGrounded;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -22,8 +25,19 @@ public class playerJump : MonoBehaviour
     }
     private void Jump()
     {
-        Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        _animator.SetBool("isJumping", true);
+        if (isGrounded)
+        {
+            Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            canDoubleJump = true;
+            _animator.SetBool("isJumping", true);
+        }
+        else if (canDoubleJump)
+        {
+            Rb2D.linearVelocity = new Vector2(Rb2D.linearVelocity.x, 0f); // Reset vertical velocity before double jump
+            Rb2D.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
+            canDoubleJump = false;
+            _animator.SetBool("isJumping", true);
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -32,6 +46,15 @@ public class playerJump : MonoBehaviour
         {
             // Tells the Animator the player has landed
             _animator.SetBool("isJumping", false);
+            isGrounded = true;
+        }
+
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 }
