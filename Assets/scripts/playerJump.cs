@@ -5,7 +5,9 @@ public class playerJump : MonoBehaviour
     [SerializeField] private Rigidbody2D Rb2D;
     [SerializeField] private float jumpForce = 5;
     [SerializeField] private Animator _animator;
-    
+    [SerializeField] private float doubleJumpForce;
+    private bool canDoubleJump;
+    private bool isGrounded;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -23,28 +25,21 @@ public class playerJump : MonoBehaviour
             Jump();
         }
     }
-
-    private bool GetIsGrounded()
-    {
-        // Lowers the starting point by 1 unit (adjust the 1f based on your sprite's size)
-        Vector2 startPos = new Vector2(transform.position.x, transform.position.y - 1f);
-
-        // Shoots a shorter raycast since it is already starting closer to the ground
-        RaycastHit2D hit = Physics2D.Raycast(startPos, Vector2.down, 0.5f);
-
-        // Draws the new offset raycast in the Scene view for debugging
-        Debug.DrawRay(startPos, Vector2.down * 0.5f, Color.red);
-
-        if (hit.collider != null && hit.collider.CompareTag("Ground"))
-        {
-            return true;
-        }
-        return false;
-    }
     private void Jump()
     {
-        Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-        _animator.SetBool("isJumping", true);
+        if (isGrounded)
+        {
+            Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+            canDoubleJump = true;
+            _animator.SetBool("isJumping", true);
+        }
+        else if (canDoubleJump)
+        {
+            Rb2D.linearVelocity = new Vector2(Rb2D.linearVelocity.x, 0f); // Reset vertical velocity before double jump
+            Rb2D.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
+            canDoubleJump = false;
+            _animator.SetBool("isJumping", true);
+        }
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -53,6 +48,15 @@ public class playerJump : MonoBehaviour
         {
             // Tells the Animator the player has landed
             _animator.SetBool("isJumping", false);
+            isGrounded = true;
+        }
+
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 }
