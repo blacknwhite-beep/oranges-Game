@@ -33,7 +33,7 @@ public class PlayerMovment1 : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        ClampMovement();
+        ////ClampMovement();
         FlipCharacterX();
     }
     private void FlipCharacterX()
@@ -52,15 +52,15 @@ public class PlayerMovment1 : MonoBehaviour
 
     }
 
-    private void ClampMovement()
-    {
-        // Restricts the X position between the left screen edge (plus half the sprite) and the right screen edge (minus half the sprite)
-        float clampedX = Mathf.Clamp(transform.position.x, -screenBounds.x + playerHalfWidth, screenBounds.x - playerHalfWidth);
-        // Temporarily stores the current position, overwrites the X value with the restricted value, and applies it back
-        Vector2 pos = transform.position;
-        pos.x = clampedX;
-        transform.position = pos;
-    }
+    //private void ClampMovement()
+    //{
+    //    // Restricts the X position between the left screen edge (plus half the sprite) and the right screen edge (minus half the sprite)
+    //    float clampedX = Mathf.Clamp(transform.position.x, -screenBounds.x + playerHalfWidth, screenBounds.x - playerHalfWidth);
+    //    // Temporarily stores the current position, overwrites the X value with the restricted value, and applies it back
+    //    Vector2 pos = transform.position;
+    //    pos.x = clampedX;
+    //    transform.position = pos;
+    //}
 
     private void HandleMovement()
     {
