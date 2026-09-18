@@ -18,7 +18,9 @@ public class playerJump : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Jump"))
+       
+        Debug.DrawRay(transform.position, Vector2.down * 1.5f, Color.red);
+        if (Input.GetKeyDown(KeyCode.Space) && GetIsGrounded())
         {
             Jump();
         }

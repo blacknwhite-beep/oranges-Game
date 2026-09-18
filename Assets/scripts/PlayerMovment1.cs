@@ -14,8 +14,13 @@ public class PlayerMovment1 : MonoBehaviour
     // Stores exactly half the width of the player's sprite image
     private float playerHalfWidth;
     private float xPosLastFrame;
+
+    
     private void Start()
     {
+        
+
+
         // Converts the literal pixel dimensions of the screen into Unity's internal world coordinate system
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         // Grabs the SpriteRenderer attached to this object and gets the distance from its center point to its outer edge
@@ -28,7 +33,7 @@ public class PlayerMovment1 : MonoBehaviour
     void Update()
     {
         HandleMovement();
-        ClampMovement();
+        ////ClampMovement();
         FlipCharacterX();
     }
     private void FlipCharacterX()
@@ -47,15 +52,15 @@ public class PlayerMovment1 : MonoBehaviour
 
     }
 
-    private void ClampMovement()
-    {
-        // Restricts the X position between the left screen edge (plus half the sprite) and the right screen edge (minus half the sprite)
-        float clampedX = Mathf.Clamp(transform.position.x, -screenBounds.x + playerHalfWidth, screenBounds.x - playerHalfWidth);
-        // Temporarily stores the current position, overwrites the X value with the restricted value, and applies it back
-        Vector2 pos = transform.position;
-        pos.x = clampedX;
-        transform.position = pos;
-    }
+    //private void ClampMovement()
+    //{
+    //    // Restricts the X position between the left screen edge (plus half the sprite) and the right screen edge (minus half the sprite)
+    //    float clampedX = Mathf.Clamp(transform.position.x, -screenBounds.x + playerHalfWidth, screenBounds.x - playerHalfWidth);
+    //    // Temporarily stores the current position, overwrites the X value with the restricted value, and applies it back
+    //    Vector2 pos = transform.position;
+    //    pos.x = clampedX;
+    //    transform.position = pos;
+    //}
 
     private void HandleMovement()
     {
@@ -79,4 +84,6 @@ public class PlayerMovment1 : MonoBehaviour
             _animator.SetBool("isRunning", false);
         }
     }
+
+    
 }
