@@ -262,8 +262,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovment1
   playerRb: {fileID: 336233754}
+  spriteRenderer: {fileID: 0}
   speed: 10
-  input: 0
+  _animator: {fileID: 0}
 --- !u!114 &336233752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -279,6 +280,9 @@ MonoBehaviour:
   Rb2D: {fileID: 336233754}
   jumpForce: 5
   _animator: {fileID: 336233755}
+  doubleJumpForce: 0
+  spriteRenderer: {fileID: 0}
+  wallJumpForce: {x: 5, y: 5}
 --- !u!70 &336233753
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2065,7 +2069,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
   m_BlendShapeWeights: []
---- !u!1001 &8305581732063435681
+--- !u!1001 &7826386772892358738
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -2073,59 +2077,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 185752765680771537, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
-      propertyPath: m_Name
-      value: DroidEnemy1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.9468
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.5233
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1696893277006893682, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+    - target: {fileID: 170488107665881110, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2102077802411782012, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
-      propertyPath: m_GravityScale
-      value: 0
+    - target: {fileID: 6825368201531028731, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
+      propertyPath: m_Name
+      value: DroidEnemy1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: ccf5c88e9f242ad499c45b971b39b3a9, type: 3}
+  m_SourcePrefab: {fileID: 100100000, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2140,4 +2140,4 @@ SceneRoots:
   - {fileID: 1529165923}
   - {fileID: 775035585}
   - {fileID: 336233757}
-  - {fileID: 8305581732063435681}
+  - {fileID: 7826386772892358738}
