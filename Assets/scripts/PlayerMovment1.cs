@@ -15,10 +15,10 @@ public class PlayerMovment1 : MonoBehaviour
     private float playerHalfWidth;
     private float xPosLastFrame;
 
-    
+
     private void Start()
     {
-        
+
 
 
         // Converts the literal pixel dimensions of the screen into Unity's internal world coordinate system
@@ -26,8 +26,8 @@ public class PlayerMovment1 : MonoBehaviour
         // Grabs the SpriteRenderer attached to this object and gets the distance from its center point to its outer edge
         playerHalfWidth = spriteRenderer.bounds.extents.x;
     }
-    
- 
+
+
 
     // Update is called once per frame
     void Update()
@@ -54,7 +54,7 @@ public class PlayerMovment1 : MonoBehaviour
 
     //private void ClampMovement()
     //{
-    //    // Restricts the X position between the left screen edge (plus half the sprite) and the right screen edge (minus half the sprite)
+    //    // Restricts the X position between the left screen edge (plus Shalf the sprite) and the right screen edge (minus half the sprite)
     //    float clampedX = Mathf.Clamp(transform.position.x, -screenBounds.x + playerHalfWidth, screenBounds.x - playerHalfWidth);
     //    // Temporarily stores the current position, overwrites the X value with the restricted value, and applies it back
     //    Vector2 pos = transform.position;
@@ -85,5 +85,5 @@ public class PlayerMovment1 : MonoBehaviour
         }
     }
 
-    
+
 }
