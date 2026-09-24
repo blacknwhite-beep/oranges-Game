@@ -83,7 +83,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: -305812631
-  m_SortingLayer: 0
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 3496671922872121163, guid: 33ebf4fd033f6814a8a3fbb2678ac976, type: 3}
@@ -196,8 +196,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerJump
   Rb2D: {fileID: 5938381168928222605}
-  jumpForce: 20
+  jumpForce: 15
   _animator: {fileID: 9043869164248395112}
+  doubleJumpForce: 10
+  spriteRenderer: {fileID: 0}
+  wallJumpForce: {x: 5, y: 5}
 --- !u!114 &5896705062367507387
 MonoBehaviour:
   m_ObjectHideFlags: 0
