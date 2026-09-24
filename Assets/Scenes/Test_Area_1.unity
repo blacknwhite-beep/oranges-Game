@@ -974,6 +974,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1354119795}
   - component: {fileID: 1354119796}
+  - component: {fileID: 1354119797}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -1054,6 +1055,19 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1354119797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1354119794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25e0a7a13c5c047489b4c507064188b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthBar
+  slider: {fileID: 1354119796}
 --- !u!1001 &1354809346
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1126,6 +1140,7 @@ GameObject:
   - component: {fileID: 1382961529}
   - component: {fileID: 1382961528}
   - component: {fileID: 1382961527}
+  - component: {fileID: 1382961534}
   m_Layer: 0
   m_Name: Biker_run_0
   m_TagString: Untagged
@@ -1328,6 +1343,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1382961534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1382961526}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce873cdf267484b4bb1b587fe47846bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 100
+  currentHealth: 100
+  healthBar: {fileID: 1354119797}
 --- !u!1 &1504581484
 GameObject:
   m_ObjectHideFlags: 0

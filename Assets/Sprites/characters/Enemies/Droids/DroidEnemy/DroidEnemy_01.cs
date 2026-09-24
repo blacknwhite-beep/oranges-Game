@@ -15,6 +15,7 @@ public class DroidEnemy_01 : MonoBehaviour
 
     private Vector2 walkDirectionVector;
     private WalkableDirection _walkDirection;
+    public int attackDamage = 1;
 
     public WalkableDirection WalkDirection
     {
@@ -53,6 +54,15 @@ public class DroidEnemy_01 : MonoBehaviour
     {
         rb.linearVelocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.linearVelocity.y);
         animator.SetBool("isMoving", Mathf.Abs(rb.linearVelocity.x) > 0.01f);
+    }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+        Debug.Log("Enemy bumped into: " + collision.gameObject.name);
+        if (player != null)
+        {
+            player.TakeDamage(attackDamage);
+        }
     }
 
     public void Shoot() => animator.SetTrigger("shoot"); 
