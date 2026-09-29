@@ -6,7 +6,7 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
 public class DroidEnemy_01 : MonoBehaviour
 {
-    public float walkSpeed = 5f;
+    public float walkSpeed = 2f;
     Rigidbody2D rb;
     TouchingDirections touchingDirections;
     Animator animator;
@@ -16,6 +16,10 @@ public class DroidEnemy_01 : MonoBehaviour
     public Transform firePoint;
     public float shootCooldown = 2f;
     public float detectRange = 6f;
+    public float shootInterval = 2f;
+
+    float shootTimer;
+
     public LayerMask playerLayer;
 
     float cooldownTimer;
@@ -60,6 +64,12 @@ public class DroidEnemy_01 : MonoBehaviour
         return -1f; // No ground found
     }
 
+    public void FireProjectile()
+    {
+        GameObject p = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        p.GetComponent<DroidProjectile>().SetStraightVelocity(walkDirectionVector);
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -77,6 +87,16 @@ public class DroidEnemy_01 : MonoBehaviour
     public void TakeHit() => animator.SetTrigger("hurt");
     public void Die() => animator.SetTrigger("dead");
 
+    public void TakeHit(float damageRecieved)
+    {
+       /* animator.SetTrigger("hurt");
+        currentHealth -= damageRecieved;
+        if (currentHealth <= 0)
+        {
+            Die();
+        } */
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -88,10 +108,21 @@ public class DroidEnemy_01 : MonoBehaviour
 
     }
 
+   
+
+    
+
+
     // Update is called once per frame
     void Update()
     {
         cooldownTimer -= Time.deltaTime;
-       
+        shootTimer -= Time.deltaTime;
+        if (shootTimer <= 0f)
+        {
+            Shoot();
+            shootTimer = shootInterval;
+        }
+
     }
 }

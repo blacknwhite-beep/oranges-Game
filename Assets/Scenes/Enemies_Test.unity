@@ -2117,6 +2117,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5912605851648446971, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
+      propertyPath: firePoint
+      value: 
+      objectReference: {fileID: 2082403355160126360, guid: 4060fa8e64cbbf7438a70ebeb3002d85, type: 3}
+    - target: {fileID: 5912605851648446971, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
+      propertyPath: projectilePrefab
+      value: 
+      objectReference: {fileID: 6279713842681430938, guid: 4e9fb57004a91724e95025c69d40f540, type: 3}
     - target: {fileID: 6825368201531028731, guid: b0ef84b135f0ad24aaa34119ef8bfb91, type: 3}
       propertyPath: m_Name
       value: DroidEnemy1
