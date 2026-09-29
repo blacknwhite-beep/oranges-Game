@@ -27,6 +27,7 @@ public class LogicManager : MonoBehaviour
         scoreText.text = playerScore.ToString();
     }
 
+    [ContextMenu("RestartGame")]
     public void restartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
