@@ -15,7 +15,9 @@ GameObject:
   - component: {fileID: 7736343313369490181}
   - component: {fileID: 6086880527384549703}
   - component: {fileID: 845502533090565419}
+  - component: {fileID: 2095626203633271843}
   - component: {fileID: 7992199683854853759}
+  - component: {fileID: -7783167054747942396}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -196,6 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d21934c3e4b7d7248a4432ab6df70ccf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::playerJump
+  playerMovementState: {fileID: 2095626203633271843}
   Rb2D: {fileID: 8264507071636212198}
   jumpForce: 5
   _animator: {fileID: 4550218896818875666}
@@ -218,6 +221,21 @@ MonoBehaviour:
   spriteRenderer: {fileID: 4245029862458776833}
   speed: 10
   _animator: {fileID: 4550218896818875666}
+--- !u!114 &2095626203633271843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082247112063185645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4c6661c877641d45900ecc445b217d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovementState
+  animator: {fileID: 4550218896818875666}
+  rigidBody: {fileID: 8264507071636212198}
+  isAttacking: 0
 --- !u!114 &7992199683854853759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,6 +248,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce873cdf267484b4bb1b587fe47846bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  maxHealth: 100
-  currentHealth: 100
-  healthBar: {fileID: 0}
+  health: 10
+--- !u!114 &-7783167054747942396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1082247112063185645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b24dc1dcb499c94284a34631e83ba0a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttack

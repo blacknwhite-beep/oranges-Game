@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class playerJump : MonoBehaviour
 {
+    [SerializeField] private PlayerMovementState playerMovementState;
     [SerializeField] private Rigidbody2D Rb2D;
     [SerializeField] private float jumpForce = 5;
     [SerializeField] private Animator _animator;
@@ -31,6 +32,7 @@ public class playerJump : MonoBehaviour
 
     private void Jump()
     {
+        playerMovementState.SetMoveState(PlayerMovementState.MovementState.Jump);
         if (isGrounded)
         {
             // Standard Ground Jump
@@ -109,5 +111,7 @@ public class playerJump : MonoBehaviour
         Rb2D.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
         canDoubleJump = false;
         _animator.SetBool("isJumping", true);
+
+        playerMovementState.SetMoveState(PlayerMovementState.MovementState.DoubleJump);
     }
 }

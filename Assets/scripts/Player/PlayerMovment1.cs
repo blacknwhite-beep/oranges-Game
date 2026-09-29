@@ -69,20 +69,26 @@ public class PlayerMovment1 : MonoBehaviour
 
         float input = Input.GetAxisRaw("Horizontal");
 
-        // Explicitly sets the Y value to 0 to prevent erratic vertical flying
-        movement = new Vector2(input * speed * Time.deltaTime, 0);
-        transform.Translate(movement);
+        // Apply horizontal movement while keeping the current natural Y falling velocity
+        playerRb.linearVelocity = new Vector2(input * speed, playerRb.linearVelocity.y);
 
+        // Flips the character sprite to face the correct direction
         if (input != 0)
         {
-            _animator.SetBool("isRunning", true);
-            // Replaces your buggy FlipCharacterX logic to stop the rapid visual flickering
             spriteRenderer.flipX = input < 0;
         }
-        else
-        {
-            _animator.SetBool("isRunning", false);
-        }
+
+        /*   if (input != 0)
+           {
+               _animator.SetBool("isRunning", true);
+               // Replaces your buggy FlipCharacterX logic to stop the rapid visual flickering
+               spriteRenderer.flipX = input < 0;
+           }
+           else
+           {
+               _animator.SetBool("isRunning", false);
+           }
+       }*/
     }
 
     
