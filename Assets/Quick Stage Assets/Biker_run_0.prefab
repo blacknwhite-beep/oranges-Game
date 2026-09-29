@@ -215,5 +215,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovment1
   playerRb: {fileID: 5938381168928222605}
   spriteRenderer: {fileID: 945672931035776368}
-  speed: 10
+  speed: 13
   _animator: {fileID: 9043869164248395112}
