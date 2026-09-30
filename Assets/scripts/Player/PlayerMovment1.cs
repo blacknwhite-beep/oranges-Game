@@ -2,11 +2,14 @@ using UnityEngine;
 
 public class PlayerMovment1 : MonoBehaviour
 {
+    #region Variables
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Rigidbody2D playerRb;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private float speed = 5f;
     [SerializeField] private Animator _animator;
+    [SerializeField] private ParticleSystem dustParticles;
+    [SerializeField] private Rigidbody2D rigidbody;
     // Stores the X and Y distances the player will move in a single frame
     private Vector2 movement;
     // Stores the X and Y world space coordinates of the camera's edges
@@ -14,17 +17,18 @@ public class PlayerMovment1 : MonoBehaviour
     // Stores exactly half the width of the player's sprite image
     private float playerHalfWidth;
     private float xPosLastFrame;
+    private Vector2 particleStartPos;
 
-    
+    #endregion
+
+
     private void Start()
     {
-        
-
-
         // Converts the literal pixel dimensions of the screen into Unity's internal world coordinate system
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         // Grabs the SpriteRenderer attached to this object and gets the distance from its center point to its outer edge
         playerHalfWidth = spriteRenderer.bounds.extents.x;
+        particleStartPos = dustParticles.transform.localPosition;
     }
     
  
@@ -34,7 +38,9 @@ public class PlayerMovment1 : MonoBehaviour
     {
         HandleMovement();
         ////ClampMovement();
+        StartStopParticles();
         FlipCharacterX();
+        xPosLastFrame = transform.position.x;
     }
     private void FlipCharacterX()
     {
@@ -43,13 +49,37 @@ public class PlayerMovment1 : MonoBehaviour
         {
             // we are moving right
             spriteRenderer.flipX = false;
+            dustParticles.transform.localPosition = particleStartPos;
+            dustParticles.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
         }
         else if (input < 0 && (transform.position.x < xPosLastFrame))
         {
+            Vector2 particlesPos = particleStartPos;
+            particlesPos.x *= -1f;
             spriteRenderer.flipX = true;
+            dustParticles.transform.localPosition = particlesPos;
+            dustParticles.transform.rotation = Quaternion.Euler(0f, 180f, 0);
         }
-        xPosLastFrame = transform.position.x;
+        
 
+    }
+    private void StartStopParticles()
+    {
+        // Use Mathf.Abs to ignore negative numbers. 
+        // If Y is > 0.1, we are in the air. If X is < 0.1, we are standing still.
+        if (Mathf.Abs(rigidbody.linearVelocity.y) > 0.1f || Mathf.Abs(rigidbody.linearVelocity.x) < 0.1f)
+        {
+            // Stop dust particles if player is jumping, falling, or standing still
+            dustParticles.Stop();
+        }
+        else
+        {
+            if (!dustParticles.isPlaying)
+            {
+                // Start dust particles if player is moving on the ground
+                dustParticles.Play();
+            }
+        }
     }
 
     //private void ClampMovement()

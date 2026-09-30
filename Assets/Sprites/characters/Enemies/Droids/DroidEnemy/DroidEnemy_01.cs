@@ -16,6 +16,7 @@ public class DroidEnemy_01 : MonoBehaviour
     private Vector2 walkDirectionVector;
     private WalkableDirection _walkDirection;
     public int attackDamage = 1;
+    public float currentHealth = 50f;
 
     public WalkableDirection WalkDirection
     {
@@ -66,7 +67,15 @@ public class DroidEnemy_01 : MonoBehaviour
     }
 
     public void Shoot() => animator.SetTrigger("shoot"); 
-    public void TakeHit() => animator.SetTrigger("hurt");
+    public void TakeHit(float damageRecieved)
+    {
+        animator.SetTrigger("hurt");
+        currentHealth -= damageRecieved;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
     public void Die() => animator.SetTrigger("dead");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

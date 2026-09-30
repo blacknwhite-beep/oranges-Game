@@ -26,7 +26,7 @@ public class PlayerMovementState : MonoBehaviour
         if (isAttacking) return; // Prevents movement state changes while attacking
         float input = Input.GetAxisRaw("Horizontal");
 
-        Debug.Log($"Input: {input} | Y-Velocity: {rigidBody.linearVelocity.y} | State: {currentMovementState}"); // debugging for movement state transitions
+        //Debug.Log($"Input: {input} | Y-Velocity: {rigidBody.linearVelocity.y} | State: {currentMovementState}"); // debugging for movement state transitions
 
         if (Mathf.Abs(rigidBody.linearVelocity.y) < 0.5f)
         {
