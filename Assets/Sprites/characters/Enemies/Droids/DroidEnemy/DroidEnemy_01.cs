@@ -6,17 +6,28 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
 public class DroidEnemy_01 : MonoBehaviour
 {
-    public float walkSpeed = 5f;
+    public float walkSpeed = 2f;
     Rigidbody2D rb;
     TouchingDirections touchingDirections;
     Animator animator;
 
+    [Header("Shooting")]
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    public float shootCooldown = 2f;
+    public float detectRange = 6f;
+    public float shootInterval = 2f;
+
+    float shootTimer;
+
+    public LayerMask playerLayer;
+
+    float cooldownTimer;
+
     public enum WalkableDirection{Left, Right}
 
-    private Vector2 walkDirectionVector;
-    private WalkableDirection _walkDirection;
-    public int attackDamage = 1;
-    public float currentHealth = 50f;
+    private Vector2 walkDirectionVector = Vector2.left;
+    private WalkableDirection _walkDirection = WalkableDirection.Left;
 
     public WalkableDirection WalkDirection
     {
@@ -26,15 +37,13 @@ public class DroidEnemy_01 : MonoBehaviour
             if(_walkDirection != value)
             {
                 // Direction flipped
-                gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x * -1, gameObject.transform.localScale.y);
+                _walkDirection = value;
+                walkDirectionVector = (value == WalkableDirection.Right) ? Vector2.right : Vector2.left;
 
-                if(value == WalkableDirection.Right)
-                {
-                    walkDirectionVector = Vector2.right;
-                } else if(value == WalkableDirection.Left)
-                {
-                    walkDirectionVector = Vector2.left;
-                }
+                // Assumes the sprite art faces right by default; swap the signs if yours faces left
+                float facing = (value == WalkableDirection.Right) ? 1f : -1f;
+                Vector3 s = transform.localScale;
+                transform.localScale = new Vector3(Mathf.Abs(s.x) * facing, s.y, s.z);
 
             }
 
@@ -42,6 +51,23 @@ public class DroidEnemy_01 : MonoBehaviour
             
 
         }
+    }
+
+    float GetDistanceFromGround()
+    {
+        RaycastHit hit;
+        // Cast a ray straight down from the character position
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            return hit.distance; // Distance to the ground surface
+        }
+        return -1f; // No ground found
+    }
+
+    public void FireProjectile()
+    {
+        GameObject p = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+        p.GetComponent<DroidProjectile>().SetStraightVelocity(walkDirectionVector);
     }
 
     private void Awake()
@@ -56,38 +82,47 @@ public class DroidEnemy_01 : MonoBehaviour
         rb.linearVelocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.linearVelocity.y);
         animator.SetBool("isMoving", Mathf.Abs(rb.linearVelocity.x) > 0.01f);
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
-        Debug.Log("Enemy bumped into: " + collision.gameObject.name);
-        if (player != null)
-        {
-            player.TakeDamage(attackDamage);
-        }
-    }
 
     public void Shoot() => animator.SetTrigger("shoot"); 
+    public void TakeHit() => animator.SetTrigger("hurt");
+    public void Die() => animator.SetTrigger("dead");
+
     public void TakeHit(float damageRecieved)
     {
-        animator.SetTrigger("hurt");
+       /* animator.SetTrigger("hurt");
         currentHealth -= damageRecieved;
         if (currentHealth <= 0)
         {
             Die();
-        }
+        } */
     }
-    public void Die() => animator.SetTrigger("dead");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
+        WalkDirection = WalkableDirection.Left;
+
+        GetDistanceFromGround(); 
+
 
     }
+
+   
+
+    
+
 
     // Update is called once per frame
     void Update()
     {
-        
+        cooldownTimer -= Time.deltaTime;
+        shootTimer -= Time.deltaTime;
+        if (shootTimer <= 0f)
+        {
+            Shoot();
+            shootTimer = shootInterval;
+        }
+
     }
 }
