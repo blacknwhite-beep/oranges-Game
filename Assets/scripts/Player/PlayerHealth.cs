@@ -1,5 +1,6 @@
-using UnityEngine;
 using System;
+using UnityEngine;
+using static PlayerMovementState;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -22,7 +23,13 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth -= damage;
         OnPlayerTakeDamage?.Invoke(currentHealth);
-       
+
+        PlayerMovementState playerMovementState = GetComponent<PlayerMovementState>();
+        if (playerMovementState != null)
+        {
+            playerMovementState.SetMoveState(MovementState.Hurt);
+        }
+
         if (currentHealth <= 0)
         {
             Destroy(gameObject);
