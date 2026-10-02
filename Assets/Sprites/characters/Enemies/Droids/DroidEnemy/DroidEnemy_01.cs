@@ -11,19 +11,12 @@ public class DroidEnemy_01 : MonoBehaviour
     TouchingDirections touchingDirections;
     Animator animator;
 
-    [Header("Shooting")]
-    public GameObject projectilePrefab;
-    public Transform firePoint;
-    public float shootCooldown = 2f;
-    public float detectRange = 6f;
-    public LayerMask playerLayer;
-
-    float cooldownTimer;
-
     public enum WalkableDirection{Left, Right}
 
-    private Vector2 walkDirectionVector = Vector2.left;
-    private WalkableDirection _walkDirection = WalkableDirection.Left;
+    private Vector2 walkDirectionVector;
+    private WalkableDirection _walkDirection;
+    public int attackDamage = 1;
+    public float currentHealth = 50f;
 
     public WalkableDirection WalkDirection
     {
@@ -33,13 +26,15 @@ public class DroidEnemy_01 : MonoBehaviour
             if(_walkDirection != value)
             {
                 // Direction flipped
-                _walkDirection = value;
-                walkDirectionVector = (value == WalkableDirection.Right) ? Vector2.right : Vector2.left;
+                gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x * -1, gameObject.transform.localScale.y);
 
-                // Assumes the sprite art faces right by default; swap the signs if yours faces left
-                float facing = (value == WalkableDirection.Right) ? 1f : -1f;
-                Vector3 s = transform.localScale;
-                transform.localScale = new Vector3(Mathf.Abs(s.x) * facing, s.y, s.z);
+                if(value == WalkableDirection.Right)
+                {
+                    walkDirectionVector = Vector2.right;
+                } else if(value == WalkableDirection.Left)
+                {
+                    walkDirectionVector = Vector2.left;
+                }
 
             }
 
@@ -47,17 +42,6 @@ public class DroidEnemy_01 : MonoBehaviour
             
 
         }
-    }
-
-    float GetDistanceFromGround()
-    {
-        RaycastHit hit;
-        // Cast a ray straight down from the character position
-        if (Physics.Raycast(transform.position, -Vector3.up, out hit, Mathf.Infinity))
-        {
-            return hit.distance; // Distance to the ground surface
-        }
-        return -1f; // No ground found
     }
 
     private void Awake()
@@ -72,26 +56,38 @@ public class DroidEnemy_01 : MonoBehaviour
         rb.linearVelocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.linearVelocity.y);
         animator.SetBool("isMoving", Mathf.Abs(rb.linearVelocity.x) > 0.01f);
     }
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        PlayerHealth player = collision.gameObject.GetComponent<PlayerHealth>();
+        Debug.Log("Enemy bumped into: " + collision.gameObject.name);
+        if (player != null)
+        {
+            player.TakeDamage(attackDamage);
+        }
+    }
 
     public void Shoot() => animator.SetTrigger("shoot"); 
-    public void TakeHit() => animator.SetTrigger("hurt");
+    public void TakeHit(float damageRecieved)
+    {
+        animator.SetTrigger("hurt");
+        currentHealth -= damageRecieved;
+        if (currentHealth <= 0)
+        {
+            Die();
+        }
+    }
     public void Die() => animator.SetTrigger("dead");
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        WalkDirection = WalkableDirection.Left;
-
-        GetDistanceFromGround(); 
-
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        cooldownTimer -= Time.deltaTime;
-       
+        
     }
 }

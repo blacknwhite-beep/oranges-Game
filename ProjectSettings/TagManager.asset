@@ -4,17 +4,17 @@
 TagManager:
   serializedVersion: 3
   tags:
-  - Ground
   - LogicManager
+  - Ground
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Wall
+  - Enemy
   - 
   - 
   - 
@@ -41,13 +41,10 @@ TagManager:
   - 
   m_SortingLayers:
   - name: background
-    uniqueID: 2929348983
+    uniqueID: 1725612119
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: character
-    uniqueID: 3989154665
     locked: 0
   m_RenderingLayers:
   - Default
