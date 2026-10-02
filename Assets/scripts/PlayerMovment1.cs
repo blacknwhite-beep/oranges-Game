@@ -25,6 +25,7 @@ public class PlayerMovment1 : MonoBehaviour
         screenBounds = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
         // Grabs the SpriteRenderer attached to this object and gets the distance from its center point to its outer edge
         playerHalfWidth = spriteRenderer.bounds.extents.x;
+        
     }
 
 

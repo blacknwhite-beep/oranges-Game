@@ -11,6 +11,8 @@ public class DroidEnemy_01 : MonoBehaviour
     TouchingDirections touchingDirections;
     Animator animator;
 
+    public float currentHealth = 50f;
+
     [Header("Shooting")]
     public GameObject projectilePrefab;
     public Transform firePoint;
@@ -84,17 +86,17 @@ public class DroidEnemy_01 : MonoBehaviour
     }
 
     public void Shoot() => animator.SetTrigger("shoot"); 
-    public void TakeHit() => animator.SetTrigger("hurt");
+    
     public void Die() => animator.SetTrigger("dead");
 
     public void TakeHit(float damageRecieved)
     {
-       /* animator.SetTrigger("hurt");
+        animator.SetTrigger("hurt");
         currentHealth -= damageRecieved;
         if (currentHealth <= 0)
         {
             Die();
-        } */
+        } 
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

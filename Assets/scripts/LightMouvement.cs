@@ -6,6 +6,8 @@ public class LightMouvement : MonoBehaviour
     public float speed = 1.5f;
     public float baseZ = 180f;
 
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
