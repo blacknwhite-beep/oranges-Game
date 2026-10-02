@@ -5,6 +5,11 @@ public class CameraMovementScript : MonoBehaviour
     public float FollowSpeed = 2f; // Speed at which the camera follows the player
     public Transform target;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+
+    private void SetCameraTarget(GameObject player)
+    {
+        target = player.transform;
+    }
     void Start()
     {
         
@@ -15,5 +20,14 @@ public class CameraMovementScript : MonoBehaviour
     {
         Vector3 newPos = new Vector3(target.position.x,target.position.y,-10f);
         transform.position = Vector3.Slerp(transform.position,newPos,FollowSpeed*Time.deltaTime);
+    }
+    private void OnEnable()
+    {
+        GameController.OnPlayerSpawned += SetCameraTarget;
+    }
+
+    private void OnDisable()
+    {
+        GameController.OnPlayerSpawned -= SetCameraTarget;
     }
 }
