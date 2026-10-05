@@ -417,6 +417,9 @@ MonoBehaviour:
   playerRb: {fileID: 1427608805}
   spriteRenderer: {fileID: 1427608802}
   speed: 5
+  _animator: {fileID: 0}
+  dustParticles: {fileID: 0}
+  rigidbody: {fileID: 0}
 --- !u!1 &1990450794
 GameObject:
   m_ObjectHideFlags: 0
