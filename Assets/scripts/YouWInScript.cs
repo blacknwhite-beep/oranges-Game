@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class GameOverTriggerScript : MonoBehaviour
+public class YouWInScript : MonoBehaviour
 {
     public LogicManager logic;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,11 +17,11 @@ public class GameOverTriggerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Game Over Triggered");
+        Debug.Log("You Win Triggered");
         if (collision.gameObject.layer == 3)
         {
-            
-            logic.gameOver();
+
+            logic.youWin();
 
         }
 
