@@ -86,5 +86,11 @@ public class PlayerMovment1 : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        if (_animator == null)
+            _animator = GetComponentInChildren<Animator>();
+    }
+
 
 }
