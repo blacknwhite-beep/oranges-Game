@@ -17,8 +17,10 @@ public class GameOverTriggerScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Debug.Log("Game Over Triggered");
         if (collision.gameObject.layer == 3)
         {
+            
             logic.gameOver();
 
         }
