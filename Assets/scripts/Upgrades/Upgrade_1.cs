@@ -12,7 +12,7 @@ public class Upgrade_1 : MonoBehaviour
 
             if (shootingScript != null)
             {
-                Debug.Log("Found PlayerShooting script on player");
+                Debug.Log("Found PlayerShooting script on player"); 
                 // Tell the player to unlock the gun
                 shootingScript.unlockGun();
 

@@ -8,6 +8,7 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private MonoBehaviour PlayerAttack;
     [SerializeField] private GameObject bulletprefab;
     [SerializeField] private Transform firePoint;
+
     public bool hasGun = false;
     public void unlockGun()
     {

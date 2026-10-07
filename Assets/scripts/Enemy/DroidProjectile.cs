@@ -64,7 +64,7 @@ public class DroidProjectile : MonoBehaviour
     {
         rb.linearVelocity = direction * normalBulletSpeed;
         if (direction.x > 0) transform.localScale = new Vector3(-1, 1, 1);
-        Debug.Log($"Velocity set to: {rb.linearVelocity}, rb null? {rb == null}");
+        //Debug.Log($"Velocity set to: {rb.linearVelocity}, rb null? {rb == null}");
     }
 
 
