@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3528871838863946234}
   - component: {fileID: 1658012896165467845}
   - component: {fileID: 3775456419592104011}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DroidEnemy1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -245,6 +245,10 @@ PrefabInstance:
     - target: {fileID: 2008658485489780657, guid: 4060fa8e64cbbf7438a70ebeb3002d85, type: 3}
       propertyPath: m_Name
       value: FirePoint
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008658485489780657, guid: 4060fa8e64cbbf7438a70ebeb3002d85, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2082403355160126360, guid: 4060fa8e64cbbf7438a70ebeb3002d85, type: 3}
       propertyPath: m_LocalPosition.x

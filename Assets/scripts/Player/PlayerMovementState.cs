@@ -23,7 +23,7 @@ public class PlayerMovementState : MonoBehaviour
     private float xPosLastFrame;
     private void Update()
     {
-        if (isAttacking) return; // Prevents movement state changes while attacking
+        if (isAttacking || currentMovementState == MovementState.Hurt) return; // Prevents movement state changes while attacking or hurt
         float input = Input.GetAxisRaw("Horizontal");
 
         //Debug.Log($"Input: {input} | Y-Velocity: {rigidBody.linearVelocity.y} | State: {currentMovementState}"); // debugging for movement state transitions
@@ -62,6 +62,7 @@ public class PlayerMovementState : MonoBehaviour
     public void SetMoveState(MovementState moveState)
     {
         if (currentMovementState == moveState) return;
+        Debug.Log($"State changing from {currentMovementState} to {moveState}");
         switch (moveState)
         {
             case MovementState.Idle:
@@ -111,6 +112,10 @@ public class PlayerMovementState : MonoBehaviour
     }
     public void HandleRun()
     {
+        if (currentMovementState == MovementState.Hurt || currentMovementState == MovementState.Death)
+        {
+            return;
+        }
         currentMovementState = MovementState.Run;
         animator.Play(runState);
     }
@@ -144,6 +149,7 @@ public class PlayerMovementState : MonoBehaviour
     }
     public void HandleHurt()
     {
+        Debug.Log("Player is hurt!");
         currentMovementState = MovementState.Hurt;
         animator.Play(hurtState);
     }
@@ -161,6 +167,10 @@ public class PlayerMovementState : MonoBehaviour
     {
         currentMovementState = MovementState.Push;
         animator.Play(pushState);
+    }
+    public void FinishHurt()
+    {
+        SetMoveState(MovementState.Idle);
     }
 
 }
