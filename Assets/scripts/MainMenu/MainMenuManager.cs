@@ -3,10 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public void StartGame(string stageName)
+    public void StartGame()
     {
         // Load the specified level of the game
-        SceneManager.LoadScene(stageName);
+        SceneManager.LoadSceneAsync(1);
     }
     public void Settings()
     {
@@ -21,6 +21,7 @@ public class MainMenuManager : MonoBehaviour
     public void QuitGame()
     {
         // Quit the application
+        Debug.Log("Quit Game");
         Application.Quit();
     }
 }
