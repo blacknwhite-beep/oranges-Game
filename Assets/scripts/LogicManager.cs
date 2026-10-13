@@ -7,6 +7,7 @@ public class LogicManager : MonoBehaviour
     public int playerScore = 0;
     public Text scoreText;
     public GameObject gameOverScreen;
+    public GameObject youWinScreen;
     public GameObject scoreUi;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,7 @@ public class LogicManager : MonoBehaviour
         scoreText.text = playerScore.ToString();
     }
 
+    [ContextMenu("RestartGame")]
     public void restartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -35,5 +37,10 @@ public class LogicManager : MonoBehaviour
     public void gameOver()
     {
         gameOverScreen.SetActive(true);
+    }
+
+    public void youWin()
+    {
+        youWinScreen.SetActive(true);
     }
 }
