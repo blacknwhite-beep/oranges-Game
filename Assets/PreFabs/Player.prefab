@@ -42,6 +42,7 @@ Transform:
   - {fileID: 3818430465556149854}
   - {fileID: 4847941684306585741}
   - {fileID: 7394452972571273970}
+  - {fileID: 7770973682308234517}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4245029862458776833
@@ -255,6 +256,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   health: 10
+  healthBar: {fileID: 0}
 --- !u!114 &-7783167054747942396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2623,6 +2625,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 3821266685991961736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2315479119464884086
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7770973682308234517}
+  - component: {fileID: 4730095879970373462}
+  m_Layer: 0
+  m_Name: Logic_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7770973682308234517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315479119464884086}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.79031605, y: 0.77586, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3821266685991961736}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4730095879970373462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2315479119464884086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dad6647fe21c2bd4684d441c2a92079d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LogicManager
+  playerScore: 0
+  scoreText: {fileID: 0}
+  gameOverScreen: {fileID: 3644494930515279600, guid: b0d3d9ca5b99c934c856dac73463fd45, type: 3}
+  youWinScreen: {fileID: 2958480799593998321, guid: 4f38f21f53873b946b170b5c1031535f, type: 3}
+  scoreUi: {fileID: 8852940273163490451, guid: d522b850108f58049a90ab278e85fe59, type: 3}
 --- !u!1 &5604991182438480142
 GameObject:
   m_ObjectHideFlags: 0

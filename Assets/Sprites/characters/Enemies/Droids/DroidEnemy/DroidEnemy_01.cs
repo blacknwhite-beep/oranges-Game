@@ -85,9 +85,19 @@ public class DroidEnemy_01 : MonoBehaviour
         animator.SetBool("isMoving", Mathf.Abs(rb.linearVelocity.x) > 0.01f);
     }
 
-    public void Shoot() => animator.SetTrigger("shoot"); 
+    public void Shoot() => animator.SetTrigger("shoot");
+
+    public void Die()
+    {
+        animator.SetTrigger("dead");
+        GetComponent<Collider2D>().enabled = false;
+    }
+
     
-    public void Die() => animator.SetTrigger("dead");
+    public void DestroyBot()
+    {
+        Destroy(gameObject);
+    }
 
     public void TakeHit(float damageRecieved)
     {

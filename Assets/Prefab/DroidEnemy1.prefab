@@ -183,7 +183,7 @@ MonoBehaviour:
   shootInterval: 2
   playerLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!114 &1658012896165467845
 MonoBehaviour:
   m_ObjectHideFlags: 0

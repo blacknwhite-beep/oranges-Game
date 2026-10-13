@@ -8,6 +8,7 @@ public class DroidProjectile : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private float normalBulletSpeed = 10f;
     [SerializeField] private float DestroyTime = 3f;
+    [SerializeField] private int damageAmount = 10;
     private Rigidbody2D rb;
     private Animator animator;
     private Collider2D col;
@@ -44,10 +45,22 @@ public class DroidProjectile : MonoBehaviour
         Destroy(gameObject, DestroyTime);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player") || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
+            // 2. If the object hit was the Player, apply the damage
+            if (other.CompareTag("Player"))
+            {
+                // NOTE: Change 'PlayerHealth' to the exact name of the script on your Player that holds TakeDamage()
+                var player = other.GetComponent<PlayerHealth>();
+                if (player != null)
+                {
+                    player.TakeDamage(damageAmount);
+                }
+            }
+
+            // 3. Stop the bullet and trigger the explosion animation
             rb.linearVelocity = Vector2.zero;
             col.enabled = false;
             CancelInvoke();

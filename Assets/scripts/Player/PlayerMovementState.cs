@@ -17,12 +17,14 @@ public class PlayerMovementState : MonoBehaviour
         Push
     }
     public MovementState currentMovementState { get; private set; }
+    
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rigidBody;
     public bool isAttacking = false;
     private float xPosLastFrame;
     private void Update()
     {
+        if (currentMovementState == MovementState.Death) return;
         if (isAttacking || currentMovementState == MovementState.Hurt) return; // Prevents movement state changes while attacking or hurt
         float input = Input.GetAxisRaw("Horizontal");
 
@@ -157,6 +159,20 @@ public class PlayerMovementState : MonoBehaviour
     {
         currentMovementState = MovementState.Death;
         animator.Play(deathState);
+
+        // Optional: Stop the player's physical movement so they don't slide while dying
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        LogicManager logic = FindAnyObjectByType<LogicManager>();
+        if (logic != null)
+        {
+            logic.Invoke("gameOver", 1.5f);
+        }
+        Destroy(gameObject, 1.5f);
     }
     public void HandleClimb()
     {
