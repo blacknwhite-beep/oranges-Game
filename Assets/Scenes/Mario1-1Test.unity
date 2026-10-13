@@ -13290,7 +13290,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.91
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -14068,6 +14068,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8129904289838957680, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
   m_PrefabInstance: {fileID: 1711449962}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1383364064 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1983604630324148172, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
+  m_PrefabInstance: {fileID: 1711449962}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1383364063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Text
 --- !u!1 &1391668786
 GameObject:
   m_ObjectHideFlags: 0
@@ -14098,7 +14109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LogicManager
   playerScore: 0
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 1383364064}
   gameOverScreen: {fileID: 241638587}
   youWinScreen: {fileID: 627827263}
   scoreUi: {fileID: 1383364063}
@@ -14701,6 +14712,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1983604630324148172, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
+      propertyPath: m_Text
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2111199430472850237, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
       propertyPath: m_Text
       value: 0
@@ -14756,6 +14771,10 @@ PrefabInstance:
     - target: {fileID: 7599666844393124468, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129904289838957680, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8386528139029736915, guid: 9081bebedd14808419cbd02ad1dca578, type: 3}
       propertyPath: m_AnchoredPosition.x
