@@ -11,8 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Mario1-1Test.unity
     guid: 8d7a501614f5c5e4a99c41ceaa1f2c3b
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+  - enabled: 1
+    path: Assets/Scenes/FinalStageV1.unity
+    guid: 9eec8e3d9f91f6948a6b3d93ce31f49a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}

@@ -141,7 +141,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 4.5
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -204,9 +204,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::playerJump
   playerMovementState: {fileID: 2095626203633271843}
   Rb2D: {fileID: 8264507071636212198}
-  jumpForce: 5
+  jumpForce: 15
   _animator: {fileID: 4550218896818875666}
-  doubleJumpForce: 5
+  doubleJumpForce: 10
   spriteRenderer: {fileID: 4245029862458776833}
   wallJumpForce: {x: 5, y: 5}
 --- !u!114 &845502533090565419
