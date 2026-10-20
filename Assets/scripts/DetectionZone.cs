@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class DetectionZone : MonoBehaviour
@@ -5,32 +6,43 @@ public class DetectionZone : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     public Transform Target { get; private set; }
-    public bool PlayerDetected => Target != null;
+    public bool PlayerDetected { get; private set; }
 
-    private int insideCount;
+    [SerializeField]
+    private string Detection = "Player";
+
+    private int collidersInside;
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Zone entered by: " + other.name + " | tag: " + other.tag);
 
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag(Detection)) return;
 
-        insideCount++;
+        collidersInside++;
+        PlayerDetected = true;
         Target = other.transform;
+
+        Debug.Log($"Trigger entered by {other.name}, tag={other.tag}, layer={LayerMask.LayerToName(other.gameObject.layer)}");
+
+
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("Zone exited by: " + other.name);
 
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag(Detection)) return;
 
-        insideCount--;
-        if (insideCount <= 0)
+        collidersInside--;
+        if (collidersInside <= 0)
         {
-            insideCount = 0;
+            collidersInside = 0;
+            PlayerDetected = false;
             Target = null;
         }
+
+        
+
     }
 
 

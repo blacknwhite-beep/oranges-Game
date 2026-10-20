@@ -1,129 +1,113 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
-public class DroidEnemy_01 : MonoBehaviour
+public class Droid01Movement : MonoBehaviour
 {
+    private Animator anim;
+    private Rigidbody2D rb;
+    private SpriteRenderer sr;
+    private Droid01Health health;
+    public LayerMask groundLayer;
+    private float lostTimer;
+    
+
     [Header("Movement")]
     public float walkSpeed = 2f;
-    public float stopDistance = 1f;      // stops walking when this close to the player
+    public float stopDistance = 1f;
+    public float loseTargetDelay = 0.75f;
+    private Transform lastTarget;
 
     [Header("Detection")]
-    public DetectionZone detectionZone;  // drag the DetectionZone child here
+    public DetectionZone detectionZone;
 
-    [Header("Shooting")]
-    public GameObject projectilePrefab;
-    public Transform firePoint;
-    public float shootInterval = 2f;
+    // 1 = facing right, -1 = facing left. Droid01Shoot reads this to fire the right way.
+    public int FacingDir { get; private set; } = -1;
 
-    [Header("Health")]
-    public float currentHealth = 50f;
+    
+    
 
-    Rigidbody2D rb;
-    TouchingDirections touchingDirections;
-    Animator animator;
 
-    float shootTimer;
-    bool isDead;
 
-    public enum WalkableDirection { Left, Right }
 
-    private Vector2 walkDirectionVector = Vector2.left;
-    private WalkableDirection _walkDirection = WalkableDirection.Left;
+    // in FixedUpdate, replacing the Y part of your velocity:
 
-    public WalkableDirection WalkDirection
-    {
-        get { return _walkDirection; }
-        set
-        {
-            if (_walkDirection != value)
-            {
-                _walkDirection = value;
-                walkDirectionVector = (value == WalkableDirection.Right) ? Vector2.right : Vector2.left;
 
-                // Assumes the sprite art faces right by default; swap the signs if yours faces left
-                float facing = (value == WalkableDirection.Right) ? 1f : -1f;
-                Vector3 s = transform.localScale;
-                transform.localScale = new Vector3(Mathf.Abs(s.x) * facing, s.y, s.z);
-            }
-        }
-    }
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        touchingDirections = GetComponent<TouchingDirections>();
-        animator = GetComponent<Animator>();
-    }
+
+
 
     private void Start()
     {
-        if (detectionZone == null)
-            Debug.LogWarning("DroidEnemy_01: Detection Zone is not assigned.", this);
-
-        WalkDirection = WalkableDirection.Left;
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        health = GetComponent<Droid01Health>();
     }
 
     private bool PlayerInZone => detectionZone != null && detectionZone.PlayerDetected;
 
     private void Update()
     {
-        if (isDead || !PlayerInZone) return;
-
-        // Face the player
-        float dx = detectionZone.Target.position.x - transform.position.x;
-        WalkDirection = dx > 0 ? WalkableDirection.Right : WalkableDirection.Left;
-
-        // Shoot on a timer, only while the player is inside the zone
-        shootTimer -= Time.deltaTime;
-        if (shootTimer <= 0f)
-        {
-            Shoot();
-            shootTimer = shootInterval;
-        }
+        
     }
 
     private void FixedUpdate()
     {
-        bool shouldMove = false;
-
-        if (!isDead && PlayerInZone)
+        if (health != null && health.IsDead)
         {
-            float distance = Mathf.Abs(detectionZone.Target.position.x - transform.position.x);
-            shouldMove = distance > stopDistance;
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            anim.SetBool("isMoving", false);
+            return;
         }
 
-        float vx = shouldMove ? walkDirectionVector.x * walkSpeed : 0f;
-        rb.linearVelocity = new Vector2(vx, rb.linearVelocity.y);
-        animator.SetBool("isMoving", shouldMove);
+        if (detectionZone.PlayerDetected && detectionZone.Target)
+        {
+            lastTarget = detectionZone.Target;
+            lostTimer = loseTargetDelay;
+            Debug.Log($"Switching to target: {detectionZone.Target.name}");
+        }
+        else
+        {
+            lostTimer -= Time.fixedDeltaTime;
+            Debug.Log($"PlayerDetected: {detectionZone.PlayerDetected}. detectZoneTarget: {detectionZone.Target}");
+        }
+
+        bool shouldMove = false;
+
+        if (lostTimer > 0f && lastTarget != null)
+        {
+            float dx = lastTarget.position.x - transform.position.x;
+
+            // Always face the player, even when standing still to shoot
+            if (Mathf.Abs(dx) > 0.01f)
+            {
+                FacingDir = (int)Mathf.Sign(dx);
+                sr.flipX = FacingDir > 0; // sprite faces LEFT by default (change to < 0 if yours faces right)
+            }
+
+            if (Mathf.Abs(dx) > stopDistance)
+            {
+                shouldMove = true;
+                rb.linearVelocity = new Vector2(FacingDir * walkSpeed, rb.linearVelocity.y);
+            }
+        }
+
+        if (!shouldMove)
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+
+        anim.SetBool("isMoving", shouldMove);
+
+        
+
+
     }
 
-    public void Shoot() => animator.SetTrigger("shoot");
-
-    // Call this from an Animation Event on the Droid_Shoot clip
-    public void FireProjectile()
+    internal void TakeHit(float damageToDeal)
     {
-        if (isDead) return;
-
-        GameObject p = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-        p.GetComponent<DroidProjectile>().SetStraightVelocity(walkDirectionVector);
-    }
-
-    public void TakeHit(float damageReceived)
-    {
-        if (isDead) return;
-
-        animator.SetTrigger("hurt");
-        currentHealth -= damageReceived;
-        if (currentHealth <= 0) Die();
-    }
-
-    public void Die()
-    {
-        isDead = true;
-        rb.linearVelocity = Vector2.zero;
-        animator.SetBool("isMoving", false);
-        animator.SetTrigger("dead");
+        throw new NotImplementedException();
     }
 }

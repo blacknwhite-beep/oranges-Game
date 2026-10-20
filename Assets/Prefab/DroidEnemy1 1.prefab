@@ -160,7 +160,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.009599998, y: 0.08640001}
+  m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.31999996, y: 0.32000002}
   m_Direction: 0
 --- !u!114 &6601950566049717287
@@ -175,13 +175,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7003546223dab54abbba439e3aa5dce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   walkSpeed: 2
   stopDistance: 3
-  detectionZone: {fileID: 948784857113813085, guid: 901a1e9f1e040cf42b15dc3496eb1918, type: 3}
-  projectilePrefab: {fileID: 6279713842681430938, guid: 4e9fb57004a91724e95025c69d40f540, type: 3}
-  firePoint: {fileID: 7101293068413794034}
-  shootInterval: 2
-  currentHealth: 50
+  loseTargetDelay: 0.75
+  detectionZone: {fileID: 4845312618988789052}
 --- !u!114 &2242117790264550179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -289,6 +289,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 901a1e9f1e040cf42b15dc3496eb1918, type: 3}
+--- !u!114 &4845312618988789052 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 948784857113813085, guid: 901a1e9f1e040cf42b15dc3496eb1918, type: 3}
+  m_PrefabInstance: {fileID: 5626333950847925601}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1ec99786d2ea394ba11e46359878842, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!4 &7516697725270413488 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2757447802567552465, guid: 901a1e9f1e040cf42b15dc3496eb1918, type: 3}

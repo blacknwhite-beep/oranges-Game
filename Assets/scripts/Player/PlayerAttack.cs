@@ -83,7 +83,7 @@ public class PlayerAttack : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             // Apply damage to the enemy
-            DroidEnemy_01 droid = enemy.GetComponent<DroidEnemy_01>();
+            Droid01Movement droid = enemy.GetComponent<Droid01Movement>();
             if (droid != null)
             {
                 droid.TakeHit(damageToDeal);
