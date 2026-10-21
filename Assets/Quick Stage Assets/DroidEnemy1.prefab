@@ -174,10 +174,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   walkSpeed: 5
-  projectilePrefab: {fileID: 0}
-  firePoint: {fileID: 0}
+  currentHealth: 50
+  projectilePrefab: {fileID: 6279713842681430938, guid: 4e9fb57004a91724e95025c69d40f540, type: 3}
+  firePoint: {fileID: 2082403355160126360, guid: 4060fa8e64cbbf7438a70ebeb3002d85, type: 3}
   shootCooldown: 2
   detectRange: 6
+  shootInterval: 2
   playerLayer:
     serializedVersion: 2
     m_Bits: 0
