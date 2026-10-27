@@ -68,8 +68,31 @@ public class DroidEnemy_01 : MonoBehaviour
 
     public void FireProjectile()
     {
+        // 1. Stop immediately if the Inspector slots are empty
+        if (projectilePrefab == null || firePoint == null)
+        {
+            Debug.LogWarning("Missing projectile or firepoint in the Inspector!");
+            return;
+        }
+
         GameObject p = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
-        p.GetComponent<DroidProjectile>().SetStraightVelocity(walkDirectionVector);
+
+        // 2. Try to shoot it as a standard enemy Droid bullet
+        DroidProjectile droidBullet = p.GetComponent<DroidProjectile>();
+        if (droidBullet != null)
+        {
+            droidBullet.SetStraightVelocity(walkDirectionVector);
+        }
+        else
+        {
+            // 3. If it is the Player's bullet (used by the Ally), apply velocity directly to its Rigidbody
+            Rigidbody2D rb = p.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                // Adjust the '10f' to match whatever your normal player bullet speed is
+                rb.linearVelocity = walkDirectionVector * 10f;
+            }
+        }
     }
 
     private void Awake()

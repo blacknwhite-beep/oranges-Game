@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5757298598115669505}
   - component: {fileID: 6283369267921707143}
   - component: {fileID: 633112468468634249}
-  - component: {fileID: 5086213017277926343}
+  - component: {fileID: 4308779140895767888}
   m_Layer: 0
   m_Name: Upgrade 3
   m_TagString: Untagged
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.7207546, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 0.063293874, b: 0.72156864, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -131,7 +131,7 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.5
---- !u!114 &5086213017277926343
+--- !u!114 &4308779140895767888
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,9 +140,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 5159954200057607697}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0eddb42f9e69f145b3681f9dc41a799, type: 3}
+  m_Script: {fileID: 11500000, guid: ccd3a115ecb9b434c8192cd3189ebaa8, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Upgrade_1
+  m_EditorClassIdentifier: Assembly-CSharp::Upgrade_3
 --- !u!1 &5834782539853200002
 GameObject:
   m_ObjectHideFlags: 0
@@ -169,8 +169,8 @@ Transform:
   m_GameObject: {fileID: 5834782539853200002}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.058, y: -0.043, z: 0}
-  m_LocalScale: {x: 0.56866, y: 0.56866, z: 0.56866}
+  m_LocalPosition: {x: -0.004, y: 0.038, z: 0}
+  m_LocalScale: {x: 2.995018, y: 2.3240314, z: 0.56866}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5757298598115669505}
@@ -224,7 +224,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -8453525482208205604, guid: 4dd63882d9bcd4d46847264bf2f7a084, type: 3}
+  m_Sprite: {fileID: 5199979006384268662, guid: 78f2d350c591bb1458a31d0533ef75b1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
