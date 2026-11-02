@@ -1409,6 +1409,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8600683167418625655, guid: b16d06d2f8ed13a429086ddc16b73eed, type: 3}
+      propertyPath: SmokePrefab
+      value: 
+      objectReference: {fileID: 7011096401834613473, guid: 457327f55f8dc7a42b103436d073799a, type: 3}
+    - target: {fileID: 8600683167418625655, guid: b16d06d2f8ed13a429086ddc16b73eed, type: 3}
+      propertyPath: smokeOffset.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600683167418625655, guid: b16d06d2f8ed13a429086ddc16b73eed, type: 3}
+      propertyPath: smokeOffset.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
