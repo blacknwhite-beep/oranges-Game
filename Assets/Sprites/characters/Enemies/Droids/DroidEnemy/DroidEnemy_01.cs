@@ -1,46 +1,42 @@
-using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
-using UnityEngine;
+
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDirections))]
-public class Droid01Movement : MonoBehaviour
+public class DroidEnemy_01 : MonoBehaviour
 {
-    private Animator anim;
-    private Rigidbody2D rb;
-    private SpriteRenderer sr;
-    private Droid01Health health;
-    public LayerMask groundLayer;
-    private float lostTimer;
-    
-
-    [Header("Movement")]
     public float walkSpeed = 2f;
-    public float stopDistance = 1f;
-    public float loseTargetDelay = 0.75f;
-    private Transform lastTarget;
+    Rigidbody2D rb;
+    TouchingDirections touchingDirections;
+    Animator animator;
 
-    [Header("Detection")]
-    public DetectionZone detectionZone;
+    public float currentHealth = 50f;
 
-    // 1 = facing right, -1 = facing left. Droid01Shoot reads this to fire the right way.
-    public int FacingDir { get; private set; } = -1;
+    [Header("Shooting")]
+    public GameObject projectilePrefab;
+    public Transform firePoint;
+    public float shootCooldown = 2f;
+    public float detectRange = 6f;
+    public float shootInterval = 2f;
 
-    
-    
+    float shootTimer;
 
+    public LayerMask playerLayer;
 
+    float cooldownTimer;
 
+    public enum WalkableDirection { Left, Right }
 
-    // in FixedUpdate, replacing the Y part of your velocity:
+    private Vector2 walkDirectionVector = Vector2.left;
+    private WalkableDirection _walkDirection = WalkableDirection.Left;
 
     public WalkableDirection WalkDirection
     {
         get { return _walkDirection; }
         set
         {
-            if(_walkDirection != value)
+            if (_walkDirection != value)
             {
                 // Direction flipped
                 _walkDirection = value;
@@ -54,7 +50,7 @@ public class Droid01Movement : MonoBehaviour
             }
 
             _walkDirection = value;
-            
+
 
         }
     }
@@ -101,17 +97,9 @@ public class Droid01Movement : MonoBehaviour
 
     private void Awake()
     {
-        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        sr = GetComponent<SpriteRenderer>();
-        health = GetComponent<Droid01Health>();
-    }
-
-    private bool PlayerInZone => detectionZone != null && detectionZone.PlayerDetected;
-
-    private void Update()
-    {
-        
+        touchingDirections = GetComponent<TouchingDirections>();
+        animator = GetComponent<Animator>();
     }
 
     private void FixedUpdate()
@@ -128,7 +116,7 @@ public class Droid01Movement : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
     }
 
-    
+
     public void DestroyBot()
     {
         Destroy(gameObject);
@@ -140,55 +128,36 @@ public class Droid01Movement : MonoBehaviour
         currentHealth -= damageRecieved;
         if (currentHealth <= 0)
         {
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-            anim.SetBool("isMoving", false);
-            return;
+            Die();
         }
+    }
 
-        if (detectionZone.PlayerDetected && detectionZone.Target)
-        {
-            lastTarget = detectionZone.Target;
-            lostTimer = loseTargetDelay;
-            Debug.Log($"Switching to target: {detectionZone.Target.name}");
-        }
-        else
-        {
-            lostTimer -= Time.fixedDeltaTime;
-            Debug.Log($"PlayerDetected: {detectionZone.PlayerDetected}. detectZoneTarget: {detectionZone.Target}");
-        }
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
 
-        bool shouldMove = false;
+        WalkDirection = WalkableDirection.Left;
 
-        if (lostTimer > 0f && lastTarget != null)
-        {
-            float dx = lastTarget.position.x - transform.position.x;
-
-            // Always face the player, even when standing still to shoot
-            if (Mathf.Abs(dx) > 0.01f)
-            {
-                FacingDir = (int)Mathf.Sign(dx);
-                sr.flipX = FacingDir > 0; // sprite faces LEFT by default (change to < 0 if yours faces right)
-            }
-
-            if (Mathf.Abs(dx) > stopDistance)
-            {
-                shouldMove = true;
-                rb.linearVelocity = new Vector2(FacingDir * walkSpeed, rb.linearVelocity.y);
-            }
-        }
-
-        if (!shouldMove)
-            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
-
-        anim.SetBool("isMoving", shouldMove);
-
-        
+        GetDistanceFromGround();
 
 
     }
 
-    internal void TakeHit(float damageToDeal)
+
+
+
+
+
+    // Update is called once per frame
+    void Update()
     {
-        throw new NotImplementedException();
+        cooldownTimer -= Time.deltaTime;
+        shootTimer -= Time.deltaTime;
+        if (shootTimer <= 0f)
+        {
+            Shoot();
+            shootTimer = shootInterval;
+        }
+
     }
 }

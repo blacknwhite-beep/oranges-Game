@@ -3,7 +3,7 @@ using UnityEngine;
 public class Droid01Shoot : MonoBehaviour
 {
     private Animator anim;
-    private Droid01Movement movement;
+    private DroidEnemy_01 movement;
     private Droid01Health health;
 
 
@@ -23,7 +23,7 @@ public class Droid01Shoot : MonoBehaviour
     void Start()
     {
         anim = GetComponent<Animator>();
-        movement = GetComponent<Droid01Movement>();
+        movement = GetComponent<DroidEnemy_01>();
         health = GetComponent<Droid01Health>();
 
     }
@@ -45,16 +45,5 @@ public class Droid01Shoot : MonoBehaviour
         }
     }
 
-    public void FireProjectile()
-    {
-        if (projectilePrefab == null || firePoint == null) return;
-        if (health != null && health.IsDead) return;
-
-        int dir = movement != null ? movement.FacingDir : -1;
-
-        // firePoint is a child, so mirror its X offset when the droid turns around
-        Vector3 offset = new Vector3(Mathf.Abs(firePoint.localPosition.x) * dir, firePoint.localPosition.y, 0f);
-        GameObject p = Instantiate(projectilePrefab, transform.position + offset, Quaternion.identity);
-        p.GetComponent<DroidProjectile>().SetStraightVelocity(new Vector2(dir, 0f));
-    }
+   
 }
