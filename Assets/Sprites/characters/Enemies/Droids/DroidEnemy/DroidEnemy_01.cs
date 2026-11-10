@@ -26,7 +26,7 @@ public class DroidEnemy_01 : MonoBehaviour
 
     float cooldownTimer;
 
-    public enum WalkableDirection{Left, Right}
+    public enum WalkableDirection { Left, Right }
 
     private Vector2 walkDirectionVector = Vector2.left;
     private WalkableDirection _walkDirection = WalkableDirection.Left;
@@ -36,7 +36,7 @@ public class DroidEnemy_01 : MonoBehaviour
         get { return _walkDirection; }
         set
         {
-            if(_walkDirection != value)
+            if (_walkDirection != value)
             {
                 // Direction flipped
                 _walkDirection = value;
@@ -50,7 +50,7 @@ public class DroidEnemy_01 : MonoBehaviour
             }
 
             _walkDirection = value;
-            
+
 
         }
     }
@@ -98,7 +98,7 @@ public class DroidEnemy_01 : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        touchingDirections = GetComponent<TouchingDirections>(); 
+        touchingDirections = GetComponent<TouchingDirections>();
         animator = GetComponent<Animator>();
     }
 
@@ -116,7 +116,7 @@ public class DroidEnemy_01 : MonoBehaviour
         GetComponent<Collider2D>().enabled = false;
     }
 
-    
+
     public void DestroyBot()
     {
         Destroy(gameObject);
@@ -129,7 +129,7 @@ public class DroidEnemy_01 : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
-        } 
+        }
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -138,14 +138,14 @@ public class DroidEnemy_01 : MonoBehaviour
 
         WalkDirection = WalkableDirection.Left;
 
-        GetDistanceFromGround(); 
+        GetDistanceFromGround();
 
 
     }
 
-   
 
-    
+
+
 
 
     // Update is called once per frame

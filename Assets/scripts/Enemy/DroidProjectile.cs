@@ -47,6 +47,12 @@ public class DroidProjectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        // Detection zones are sensors, not physical targets. In particular, the
+        // player's DetectionZone is tagged Player and must not stop the bullet.
+        if (other.GetComponent<DetectionZone>() != null) return;
+
+        Debug.Log($"[DroidProjectile] Trigger with '{other.name}' (tag: {other.tag}, layer: {other.gameObject.layer}) at {transform.position}");
+
         if (other.CompareTag("Player") || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             // 2. If the object hit was the Player, apply the damage
@@ -76,8 +82,8 @@ public class DroidProjectile : MonoBehaviour
     public void SetStraightVelocity(Vector2 direction)
     {
         rb.linearVelocity = direction * normalBulletSpeed;
+        Debug.Log($"[DroidProjectile] Velocity set to {rb.linearVelocity} at {transform.position}");
         if (direction.x > 0) transform.localScale = new Vector3(-1, 1, 1);
-        //Debug.Log($"Velocity set to: {rb.linearVelocity}, rb null? {rb == null}");
     }
 
 

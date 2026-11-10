@@ -1,6 +1,7 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class DroneMovement1 : MonoBehaviour
 {
@@ -25,6 +26,11 @@ public class DroneMovement1 : MonoBehaviour
     private Vector2 basePos;
     private float alertTimer;
     private float loseTimer;
+
+   
+
+    public event System.Action<Transform> PlayerSpotted;
+    public event System.Action PlayerLost;
 
 
 
@@ -70,6 +76,7 @@ public class DroneMovement1 : MonoBehaviour
                 alertTimer = alertTime;
                 animator.SetTrigger("Scan");
                 Debug.Log("Player detected!");
+                PlayerSpotted?.Invoke(target);
             }
         }
         else if (target != null)
@@ -79,6 +86,7 @@ public class DroneMovement1 : MonoBehaviour
             {
                 target = null;
                 Debug.Log("Player lost!");
+                PlayerLost?.Invoke();
             }
         }
 
@@ -111,6 +119,29 @@ public class DroneMovement1 : MonoBehaviour
         transform.position = new Vector3(basePos.x, basePos.y + bob, transform.position.z);
 
         animator.SetBool("isMoving", chasing);
+
+        if (seen)
+        {
+            loseTimer = loseSightDelay;
+            if (target == null)
+            {
+                target = playerCol.transform;
+                alertTimer = alertTime;
+                animator.SetTrigger("Scan");
+                Debug.Log("Player detected!");
+                PlayerSpotted?.Invoke(target);   // <-- add this
+            }
+        }
+        else if (target != null)
+        {
+            loseTimer -= Time.deltaTime;
+            if (loseTimer <= 0f)
+            {
+                target = null;
+                Debug.Log("Player lost!");
+                PlayerLost?.Invoke();            // <-- and this
+            }
+        }
 
     }
 }
