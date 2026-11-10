@@ -4,6 +4,7 @@ public class CameraMovementScript : MonoBehaviour
 {
     public float FollowSpeed = 2f; // Speed at which the camera follows the player
     public Transform target;
+    [SerializeField] public float cameraHieghtY = 1f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     private void SetCameraTarget(GameObject player)
