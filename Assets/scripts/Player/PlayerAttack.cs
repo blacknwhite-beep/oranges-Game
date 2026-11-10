@@ -14,11 +14,14 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attack3Damage = 20f;
     [Header("Hit Feedback")]
     [SerializeField] private float hitStopDuration = 0.12f;
+    [SerializeField, Range(0f, 1f)] private float comboHitVolume = 1f;
     [Header("AoE Settings")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange = 0.5f;
 
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+    private AudioClip[] comboHitClips;
 
 
 
@@ -26,6 +29,18 @@ public class PlayerAttack : MonoBehaviour
     {
         moveState = GetComponent<PlayerMovementState>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+        audioSource.playOnAwake = false;
+
+        comboHitClips = new AudioClip[3];
+        for (int i = 0; i < comboHitClips.Length; i++)
+        {
+            comboHitClips[i] = Resources.Load<AudioClip>($"Audio/Player/ComboHit_{i + 1}");
+        }
     }
 
     // Update is called once per frame
@@ -99,6 +114,26 @@ public class PlayerAttack : MonoBehaviour
         if (damageDelivered)
         {
             HitStop.Request(hitStopDuration);
+
+            int clipIndex = 0;
+            if (moveState.currentMovementState == PlayerMovementState.MovementState.Attack2)
+            {
+                clipIndex = 1;
+            }
+            else if (moveState.currentMovementState == PlayerMovementState.MovementState.Attack3)
+            {
+                clipIndex = 2;
+            }
+
+            AudioClip hitClip = comboHitClips[clipIndex];
+            if (hitClip != null)
+            {
+                audioSource.PlayOneShot(hitClip, comboHitVolume);
+            }
+            else
+            {
+                Debug.LogWarning($"Missing combo hit audio at Resources/Audio/Player/ComboHit_{clipIndex + 1}.wav");
+            }
         }
     }
     //draws a red circle in the scene view to see the attack range
