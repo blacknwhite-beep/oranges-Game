@@ -17,13 +17,15 @@ public class PlayerMovementState : MonoBehaviour
         Push
     }
     public MovementState currentMovementState { get; private set; }
+    
     [SerializeField] private Animator animator;
     [SerializeField] private Rigidbody2D rigidBody;
     public bool isAttacking = false;
     private float xPosLastFrame;
     private void Update()
     {
-        if (isAttacking) return; // Prevents movement state changes while attacking
+        if (currentMovementState == MovementState.Death) return;
+        if (isAttacking || currentMovementState == MovementState.Hurt) return; // Prevents movement state changes while attacking or hurt
         float input = Input.GetAxisRaw("Horizontal");
 
         //Debug.Log($"Input: {input} | Y-Velocity: {rigidBody.linearVelocity.y} | State: {currentMovementState}"); // debugging for movement state transitions
@@ -62,6 +64,7 @@ public class PlayerMovementState : MonoBehaviour
     public void SetMoveState(MovementState moveState)
     {
         if (currentMovementState == moveState) return;
+        Debug.Log($"State changing from {currentMovementState} to {moveState}");
         switch (moveState)
         {
             case MovementState.Idle:
@@ -111,6 +114,10 @@ public class PlayerMovementState : MonoBehaviour
     }
     public void HandleRun()
     {
+        if (currentMovementState == MovementState.Hurt || currentMovementState == MovementState.Death)
+        {
+            return;
+        }
         currentMovementState = MovementState.Run;
         animator.Play(runState);
     }
@@ -144,6 +151,7 @@ public class PlayerMovementState : MonoBehaviour
     }
     public void HandleHurt()
     {
+        Debug.Log("Player is hurt!");
         currentMovementState = MovementState.Hurt;
         animator.Play(hurtState);
     }
@@ -151,6 +159,20 @@ public class PlayerMovementState : MonoBehaviour
     {
         currentMovementState = MovementState.Death;
         animator.Play(deathState);
+
+        // Optional: Stop the player's physical movement so they don't slide while dying
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+
+        LogicManager logic = FindAnyObjectByType<LogicManager>();
+        if (logic != null)
+        {
+            logic.Invoke("gameOver", 1.5f);
+        }
+        Destroy(gameObject, 1.5f);
     }
     public void HandleClimb()
     {
@@ -161,6 +183,10 @@ public class PlayerMovementState : MonoBehaviour
     {
         currentMovementState = MovementState.Push;
         animator.Play(pushState);
+    }
+    public void FinishHurt()
+    {
+        SetMoveState(MovementState.Idle);
     }
 
 }

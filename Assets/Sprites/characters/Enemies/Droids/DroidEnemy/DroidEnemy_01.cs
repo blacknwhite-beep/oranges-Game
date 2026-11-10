@@ -35,12 +35,71 @@ public class Droid01Movement : MonoBehaviour
 
     // in FixedUpdate, replacing the Y part of your velocity:
 
+    public WalkableDirection WalkDirection
+    {
+        get { return _walkDirection; }
+        set
+        {
+            if(_walkDirection != value)
+            {
+                // Direction flipped
+                _walkDirection = value;
+                walkDirectionVector = (value == WalkableDirection.Right) ? Vector2.right : Vector2.left;
 
+                // Assumes the sprite art faces right by default; swap the signs if yours faces left
+                float facing = (value == WalkableDirection.Right) ? 1f : -1f;
+                Vector3 s = transform.localScale;
+                transform.localScale = new Vector3(Mathf.Abs(s.x) * facing, s.y, s.z);
 
+            }
 
+            _walkDirection = value;
+            
 
+        }
+    }
 
-    private void Start()
+    float GetDistanceFromGround()
+    {
+        RaycastHit hit;
+        // Cast a ray straight down from the character position
+        if (Physics.Raycast(transform.position, -Vector3.up, out hit, Mathf.Infinity))
+        {
+            return hit.distance; // Distance to the ground surface
+        }
+        return -1f; // No ground found
+    }
+
+    public void FireProjectile()
+    {
+        // 1. Stop immediately if the Inspector slots are empty
+        if (projectilePrefab == null || firePoint == null)
+        {
+            Debug.LogWarning("Missing projectile or firepoint in the Inspector!");
+            return;
+        }
+
+        GameObject p = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+
+        // 2. Try to shoot it as a standard enemy Droid bullet
+        DroidProjectile droidBullet = p.GetComponent<DroidProjectile>();
+        if (droidBullet != null)
+        {
+            droidBullet.SetStraightVelocity(walkDirectionVector);
+        }
+        else
+        {
+            // 3. If it is the Player's bullet (used by the Ally), apply velocity directly to its Rigidbody
+            Rigidbody2D rb = p.GetComponent<Rigidbody2D>();
+            if (rb != null)
+            {
+                // Adjust the '10f' to match whatever your normal player bullet speed is
+                rb.linearVelocity = walkDirectionVector * 10f;
+            }
+        }
+    }
+
+    private void Awake()
     {
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -57,7 +116,29 @@ public class Droid01Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (health != null && health.IsDead)
+        rb.linearVelocity = new Vector2(walkDirectionVector.x * walkSpeed, rb.linearVelocity.y);
+        animator.SetBool("isMoving", Mathf.Abs(rb.linearVelocity.x) > 0.01f);
+    }
+
+    public void Shoot() => animator.SetTrigger("shoot");
+
+    public void Die()
+    {
+        animator.SetTrigger("dead");
+        GetComponent<Collider2D>().enabled = false;
+    }
+
+    
+    public void DestroyBot()
+    {
+        Destroy(gameObject);
+    }
+
+    public void TakeHit(float damageRecieved)
+    {
+        animator.SetTrigger("hurt");
+        currentHealth -= damageRecieved;
+        if (currentHealth <= 0)
         {
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
             anim.SetBool("isMoving", false);
