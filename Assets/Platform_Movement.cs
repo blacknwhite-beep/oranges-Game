@@ -6,7 +6,7 @@ public class Platform_Movement : MonoBehaviour
     private float timer = 0;
 
     [SerializeField] public float maxTimeMovingLeft = 15; // How long the platform moves left before switching direction
-    [SerializeField] public float maxTimeMovingRight = 60; //Twice as long as left, so platform will return to 0 and move right for the same amount of time as left
+    [SerializeField] public float maxTimeMovingRight = 60; //3x as long as left, so platform will return to 0 and move right for the same amount of time as left
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

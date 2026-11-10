@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class LogicManager : MonoBehaviour
 {
@@ -9,6 +10,10 @@ public class LogicManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject youWinScreen;
     public GameObject scoreUi;
+    public playerJump plJump;
+    
+
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,6 +25,10 @@ public class LogicManager : MonoBehaviour
     {
         
     }
+    
+
+
+
     [ContextMenu("Add Score")]
     public void addScore(int scoreToAdd)
     {
@@ -43,4 +52,7 @@ public class LogicManager : MonoBehaviour
     {
         youWinScreen.SetActive(true);
     }
+
+
+    
 }
