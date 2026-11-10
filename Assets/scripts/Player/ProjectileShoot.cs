@@ -4,6 +4,8 @@ public class ProjectileShoot : MonoBehaviour
 {
     public float speed = 10f;
     public int damage = 10;
+    [Header("Hit Feedback")]
+    [SerializeField] private float hitStopDuration = 0.12f;
     private Rigidbody2D rb;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,6 +28,7 @@ public class ProjectileShoot : MonoBehaviour
         if (enemy != null)
         {
             enemy.TakeHit(damage);
+            HitStop.Request(hitStopDuration);
             Destroy(gameObject); // Destroy the projectile on collision
         }
 

@@ -12,10 +12,11 @@ public class PlayerAttack : MonoBehaviour
     [SerializeField] private float attack1Damage = 10f;
     [SerializeField] private float attack2Damage = 15f;
     [SerializeField] private float attack3Damage = 20f;
+    [Header("Hit Feedback")]
+    [SerializeField] private float hitStopDuration = 0.12f;
     [Header("AoE Settings")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange = 0.5f;
-    [SerializeField] private LayerMask enemyLayers;
 
     private SpriteRenderer spriteRenderer;
 
@@ -77,18 +78,27 @@ public class PlayerAttack : MonoBehaviour
             float xOffset = attackPoint.localPosition.x;
             hitCenter = new Vector2(transform.position.x - xOffset, attackPoint.position.y);
         }
-        // Detect enemies in range of attack
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitCenter, attackRange, enemyLayers);
-        Debug.Log($"Hit check complete. Found {hitEnemies.Length} objects inside the red circle."); // Debugging line to check how many enemies were hit
+        // Detect targets in range; the component check below filters actual enemies.
+        // Some enemy prefabs use the Default layer rather than the Enemy layer.
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(hitCenter, attackRange);
+        Debug.Log($"Hit check complete at {hitCenter}. Found {hitEnemies.Length} objects inside the red circle.");
+        bool damageDelivered = false;
         foreach (Collider2D enemy in hitEnemies)
         {
+            Debug.Log($"[PlayerAttack] Overlap with '{enemy.name}' on layer {enemy.gameObject.layer}.");
             // Apply damage to the enemy
             DroidEnemy_01 droid = enemy.GetComponent<DroidEnemy_01>();
             if (droid != null)
             {
                 droid.TakeHit(damageToDeal);
+                damageDelivered = true;
                 Debug.Log($"Hit {enemy.name} for {damageToDeal} damage.");
             }
+        }
+
+        if (damageDelivered)
+        {
+            HitStop.Request(hitStopDuration);
         }
     }
     //draws a red circle in the scene view to see the attack range

@@ -152,6 +152,9 @@ public class PlayerMovementState : MonoBehaviour
     public void HandleHurt()
     {
         Debug.Log("Player is hurt!");
+        // If damage interrupts an attack, its FinishAttack animation event will
+        // not run. Clear the flag so the player is not locked out of attacking.
+        isAttacking = false;
         currentMovementState = MovementState.Hurt;
         animator.Play(hurtState);
     }

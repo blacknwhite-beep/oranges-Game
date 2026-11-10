@@ -13447,6 +13447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovementScript
   FollowSpeed: 2
   target: {fileID: 345006931}
+  cameraHieghtY: 1
 --- !u!1 &627827263
 GameObject:
   m_ObjectHideFlags: 0
@@ -14389,6 +14390,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 241638587}
   youWinScreen: {fileID: 627827263}
   scoreUi: {fileID: 1383364063}
+  plJump: {fileID: 0}
 --- !u!4 &1391668788
 Transform:
   m_ObjectHideFlags: 0
@@ -15551,6 +15553,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7783167054747942396, guid: e11e85c322228fd479986a7ca624d592, type: 3}
+      propertyPath: hitStopDuration
+      value: 0.17
+      objectReference: {fileID: 0}
     - target: {fileID: 1082247112063185645, guid: e11e85c322228fd479986a7ca624d592, type: 3}
       propertyPath: m_Name
       value: Player
