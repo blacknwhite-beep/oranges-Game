@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1950259070691374521}
   - component: {fileID: 5406430111221176777}
   - component: {fileID: 3813431983961539638}
+  - component: {fileID: 1646129628393802638}
   m_Layer: 0
   m_Name: Drone_Enemy
   m_TagString: Untagged
@@ -202,6 +203,22 @@ MonoBehaviour:
   alertTime: 0.5
   chaseSpeed: 10
   hoverAbovePlayer: 4
+--- !u!114 &1646129628393802638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8081610423717514434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e92d473182ddb80428e3e4f9a9229eef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  currentHealth: 10
+  explosionPrefab: {fileID: 2959211794879601807, guid: d14f84ab48c1aa842a0a4a2531ef91ac, type: 3}
+  explosionLifetime: 1
+  deathDelay: 0.5
 --- !u!1001 &5229002196715183965
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -216,7 +233,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].x
-      value: 0.44333866
+      value: 0.2668725
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[0].y
@@ -224,11 +241,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].x
-      value: 0.79533136
+      value: 0.49932328
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[1].y
-      value: 1.0351484
+      value: 1.1148427
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[2].x
@@ -248,27 +265,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].x
-      value: 0.75668025
+      value: 0.5232891
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[4].y
-      value: 1.1149592
+      value: 1.1434216
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[5].x
-      value: -0.6266085
+      value: -0.529837
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[5].y
-      value: 1.0540552
+      value: 1.213444
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].x
-      value: -0.37935632
+      value: -0.26550713
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[6].y
-      value: 0.5799939
+      value: 0.59137887
       objectReference: {fileID: 0}
     - target: {fileID: 6085306909858352130, guid: 3272ddc47fc1e8140831199820079bfc, type: 3}
       propertyPath: m_Points.m_Paths.Array.data[0].Array.data[7].x

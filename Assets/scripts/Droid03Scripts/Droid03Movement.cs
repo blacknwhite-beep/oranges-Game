@@ -5,6 +5,7 @@ public class Droid03Movement : MonoBehaviour
     private Animator anim;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    private Droid01Health health;
     private float lostTimer;
     private float moveDir;
     private string currentState;
@@ -36,6 +37,7 @@ public class Droid03Movement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        health = GetComponent<Droid01Health>(); 
         ChangeState("Droid03Idle");
 
     }
@@ -43,31 +45,48 @@ public class Droid03Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Transform target = lastTarget; // e.g. detectionZone.GetTarget();
-
-        if (target != null)
+        // Stop everything if dead
+        if (health != null && health.IsDead)
         {
-            float dist = Vector2.Distance(transform.position, target.position);
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            return;
+        }
 
-            if (dist > stopDistance)
+        // THIS replaces "Transform target = lastTarget;"
+        // Read the player from the DetectionZone
+        if (detectionZone != null && detectionZone.Target != null)
+        {
+            lastTarget = detectionZone.Target;
+            lostTimer = loseTargetDelay;
+        }
+        else if (lastTarget != null)
+        {
+            lostTimer -= Time.deltaTime;
+            if (lostTimer <= 0f) lastTarget = null;
+        }
+
+        // Move toward the target
+        if (lastTarget != null)
+        {
+            float dx = lastTarget.position.x - transform.position.x;
+
+            if (Mathf.Abs(dx) > stopDistance)
             {
-                float dir = Mathf.Sign(target.position.x - transform.position.x);
+                float dir = Mathf.Sign(dx);
                 rb.linearVelocity = new Vector2(dir * walkSpeed, rb.linearVelocity.y);
-                sr.flipX = dir < 0;// face the player
+                sr.flipX = dir < 0;
                 ChangeState("Droid03Move");
-
             }
             else
             {
                 rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-                ChangeState("Droid03Attack");
+                ChangeState("Droid03Idle");
             }
         }
         else
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
             ChangeState("Droid03Idle");
-
         }
     }
 

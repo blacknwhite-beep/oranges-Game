@@ -294,6 +294,9 @@ MonoBehaviour:
   walkSpeed: 2
   stopDistance: 1
   loseTargetDelay: 0.75
+  SmokePrefab: {fileID: 7011096401834613473, guid: 457327f55f8dc7a42b103436d073799a, type: 3}
+  smokeInterval: 0.25
+  smokeOffset: {x: 1, y: 1}
   detectionZone: {fileID: 5185402843749792024}
 --- !u!114 &1300962941234637597
 MonoBehaviour:

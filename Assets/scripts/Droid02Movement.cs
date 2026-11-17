@@ -13,6 +13,7 @@ public class Droid02Movement : MonoBehaviour
     [Header("Movement")]
     public float walkSpeed = 2f;
     public float stopDistance = 1f;
+    public float spawnChaseTime = 5f;   // how long it chases right after spawning
     public float loseTargetDelay = 0.75f;
     private Transform lastTarget;
 
@@ -37,6 +38,13 @@ public class Droid02Movement : MonoBehaviour
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            lastTarget = player.transform;
+            lostTimer = spawnChaseTime;
+        }
 
     }
 

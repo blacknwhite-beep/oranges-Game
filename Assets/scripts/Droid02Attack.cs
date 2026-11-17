@@ -9,6 +9,7 @@ public class Droid02Attack : MonoBehaviour
 
     [Header("Attack")]
     public float attackCooldown = 1.5f;
+    public int damage = 1;
     private float nextAttackTime;
 
     [Header("Effect")]
@@ -22,6 +23,7 @@ public class Droid02Attack : MonoBehaviour
         if (explosionPrefab == null || firepoint == null) return;
         GameObject fx = Instantiate(explosionPrefab, firepoint.position, firepoint.rotation);
         Destroy(fx, 1f); // roughly the clip length
+        DealDamage();
     }
 
 
@@ -36,22 +38,22 @@ public class Droid02Attack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (attackZone.PlayerDetected && Time.time >= nextAttackTime)
-        {
-            anim.SetTrigger("Attack");
-            nextAttackTime = Time.time + attackCooldown;
-        }
-
         if (attackZone == null) { Debug.LogWarning("attackZone not assigned"); return; }
 
-        if (attackZone.PlayerDetected)
-            Debug.Log("Player in attack zone");
-
         if (attackZone.PlayerDetected && Time.time >= nextAttackTime)
         {
-            Debug.Log("Attack trigger set");
             anim.SetTrigger("Attack");
             nextAttackTime = Time.time + attackCooldown;
         }
+    }
+
+    private void DealDamage()
+    {
+        // Only hit if the player is still in range when the attack lands
+        if (!attackZone.PlayerDetected || attackZone.Target == null) return;
+
+        PlayerHealth playerHealth = attackZone.Target.GetComponentInParent<PlayerHealth>();
+        if (playerHealth != null)
+            playerHealth.TakeDamage(damage);
     }
 }

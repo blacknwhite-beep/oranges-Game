@@ -13,6 +13,7 @@ public class Droid03Attack : MonoBehaviour
 
     [Header("Shooting")]
     public float shootCooldown = 2f;
+    public float projectileSpeed = 6f;
     private float nextShootTime;
 
     [Header("Projectile")]
@@ -36,20 +37,50 @@ public class Droid03Attack : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+    private Transform attackTarget;   // add this with your other fields
+
     void Update()
     {
-        if (shootZone == null)
-        {
-            Debug.LogWarning("shootZone not assigned"); return;
-        }
-
+        if (shootZone == null) { Debug.LogWarning("shootZone not assigned"); return; }
         if (health != null && health.IsDead) return;
 
-        if (shootZone.PlayerDetected && Time.time >= nextShootTime)
+        if (shootZone.PlayerDetected && shootZone.Target != null && Time.time >= nextShootTime)
         {
-            ChangeState("Droid03Attack");
+            StartAttack(shootZone.Target);
+        }
+    }
+
+    void StartAttack(Transform target)
+    {
+        nextShootTime = Time.time + shootCooldown;
+        attackTarget = target;                 // remember who we're shooting at
+        anim.Play("Droid03Attack", 0, 0f);     // just play the animation, no bullet yet
+    }
+
+    // Called by the Animation Event, so it must be PUBLIC
+    public void FireProjectile()
+    {
+        if (health != null && health.IsDead) return;
+
+        if (projectilePrefab == null || firePoint == null)
+        {
+            Debug.LogWarning("Projectile Prefab or Fire Point not assigned");
+            return;
         }
 
+        // Aim at the target if we still have one, otherwise shoot the way we're facing
+        float dir;
+        if (attackTarget != null)
+            dir = Mathf.Sign(attackTarget.position.x - firePoint.position.x);
+        else
+            dir = GetComponent<SpriteRenderer>().flipX ? -1f : 1f;
+
+        GameObject p = Instantiate(projectilePrefab, firePoint.position, Quaternion.identity);
+
+        Rigidbody2D prb = p.GetComponent<Rigidbody2D>();
+        if (prb != null) prb.linearVelocity = new Vector2(dir * projectileSpeed, 0f);
+
+        SpriteRenderer psr = p.GetComponent<SpriteRenderer>();
+        if (psr != null) psr.flipX = dir < 0;
     }
 }

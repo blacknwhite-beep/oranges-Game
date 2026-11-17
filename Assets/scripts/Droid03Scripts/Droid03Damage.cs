@@ -1,0 +1,73 @@
+using UnityEngine;
+
+public class Droid03Damage : MonoBehaviour
+{
+    [SerializeField] private float DestroyTime = 3f;
+    [SerializeField] private int damageAmount = 10;
+    private Rigidbody2D rb;
+    private Animator animator;
+    private Collider2D col;
+
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        rb.gravityScale = 0f;
+        col = GetComponent<Collider2D>();
+
+    }
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        
+
+        SetDestroyTime();
+
+    }
+
+    private void SetDestroyTime()
+    {
+        Destroy(gameObject, DestroyTime);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Detection zones are sensors, not physical targets. In particular, the
+        // player's DetectionZone is tagged Player and must not stop the bullet.
+        if (other.GetComponent<DetectionZone>() != null) return;
+
+        Debug.Log($"[DroidProjectile] Trigger with '{other.name}' (tag: {other.tag}, layer: {other.gameObject.layer}) at {transform.position}");
+
+        if (other.CompareTag("Player") || other.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            // 2. If the object hit was the Player, apply the damage
+            if (other.CompareTag("Player"))
+            {
+                // NOTE: Change 'PlayerHealth' to the exact name of the script on your Player that holds TakeDamage()
+                var player = other.GetComponent<PlayerHealth>();
+                if (player != null)
+                {
+                    player.TakeDamage(damageAmount);
+                }
+            }
+
+            // 3. Stop the bullet and trigger the explosion animation
+            rb.linearVelocity = Vector2.zero;
+            col.enabled = false;
+            CancelInvoke();
+            animator.SetTrigger("isHit");
+        }
+    }
+
+    public void OnImpactFinished()
+    {
+        Destroy(gameObject);
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+}
