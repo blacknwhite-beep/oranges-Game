@@ -19,6 +19,8 @@ public class DroidEnemy_01 : MonoBehaviour
     public float shootCooldown = 2f;
     public float detectRange = 6f;
     public float shootInterval = 2f;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip gunShot;
 
     float shootTimer;
 
@@ -93,6 +95,7 @@ public class DroidEnemy_01 : MonoBehaviour
                 rb.linearVelocity = walkDirectionVector * 10f;
             }
         }
+        audioSource.PlayOneShot(gunShot);
     }
 
     private void Awake()
