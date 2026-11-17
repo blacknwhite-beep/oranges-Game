@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class PlayerAttack : MonoBehaviour
 {
@@ -15,6 +16,10 @@ public class PlayerAttack : MonoBehaviour
     [Header("Hit Feedback")]
     [SerializeField] private float hitStopDuration = 0.12f;
     [SerializeField, Range(0f, 1f)] private float comboHitVolume = 1f;
+    [SerializeField] private float shakeDuration = 0.20f; // Slightly longer than hitStop so you see the settle
+    [SerializeField] private float shakeMagnitude = 0.22f;
+    [SerializeField] private float thirdHitShakeMultiplier = 1.8f;
+    private Coroutine shakeCoroutine;
     [Header("AoE Settings")]
     [SerializeField] private Transform attackPoint;
     [SerializeField] private float attackRange = 0.5f;
@@ -114,6 +119,12 @@ public class PlayerAttack : MonoBehaviour
         if (damageDelivered)
         {
             HitStop.Request(hitStopDuration);
+            float currentShake = (moveState.currentMovementState == PlayerMovementState.MovementState.Attack3) ? shakeMagnitude * thirdHitShakeMultiplier : shakeMagnitude;
+            if (shakeCoroutine != null)
+            {
+                StopCoroutine(shakeCoroutine);
+            }
+            shakeCoroutine = StartCoroutine(ShakeCameraUnscaled(shakeDuration, currentShake));
 
             int clipIndex = 0;
             if (moveState.currentMovementState == PlayerMovementState.MovementState.Attack2)
@@ -135,6 +146,35 @@ public class PlayerAttack : MonoBehaviour
                 Debug.LogWarning($"Missing combo hit audio at Resources/Audio/Player/ComboHit_{clipIndex + 1}.wav");
             }
         }
+    }
+    private IEnumerator ShakeCameraUnscaled(float duration, float magnitude)
+    {
+        Camera mainCam = Camera.main;
+        if (mainCam == null) yield break;
+
+        Transform camTransform = mainCam.transform;
+        float elapsed = 0f;
+        int flip = 1; // Forces the camera to snap to the opposite side every frame
+
+        while (elapsed < duration)
+        {
+            // Decay from 100% strength down to 0% over the duration
+            float damper = 1f - (elapsed / duration);
+
+            // Pick a direction on the outer edge (normalized) and flip it every frame for rapid vibration
+            Vector2 dir = new Vector2(flip, Random.Range(-0.7f, 0.7f)).normalized;
+            Vector3 offset = (Vector3)(dir * magnitude * damper);
+
+            camTransform.localPosition += offset;
+
+            yield return null;
+
+            camTransform.localPosition -= offset;
+            flip = -flip; // Invert direction for the next frame
+            elapsed += Time.unscaledDeltaTime;
+        }
+
+        shakeCoroutine = null;
     }
     //draws a red circle in the scene view to see the attack range
     private void OnDrawGizmosSelected()
