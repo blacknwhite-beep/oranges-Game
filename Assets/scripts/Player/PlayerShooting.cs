@@ -10,6 +10,10 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField] private Transform firePoint;
 
     public bool hasGun = false;
+
+    [Header("Gun audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip gunShot;
     public void unlockGun()
     {
         hasGun = true;
@@ -69,6 +73,7 @@ public class PlayerShooting : MonoBehaviour
         gunAnim.SetTrigger("Shoot");
         Debug.Log("Player shoots!");
         Instantiate(bulletprefab, firePoint.position, firePoint.rotation);
+        audioSource.PlayOneShot(gunShot);
     }
     
 }
