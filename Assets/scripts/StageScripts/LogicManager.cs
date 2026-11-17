@@ -50,6 +50,7 @@ public class LogicManager : MonoBehaviour
 
     public void youWin()
     {
+        Debug.Log("You Win Triggered");
         youWinScreen.SetActive(true);
     }
 

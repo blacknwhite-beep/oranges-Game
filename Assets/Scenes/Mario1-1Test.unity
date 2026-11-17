@@ -519,19 +519,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4534015232558170977, guid: ff52b5405b5af95418a0fb77c7ef3428, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.0318742
+      value: 3.24
       objectReference: {fileID: 0}
     - target: {fileID: 4534015232558170977, guid: ff52b5405b5af95418a0fb77c7ef3428, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.06
+      value: -1.19
       objectReference: {fileID: 0}
     - target: {fileID: 7453304238951872793, guid: ff52b5405b5af95418a0fb77c7ef3428, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17.6
+      value: -20.55
       objectReference: {fileID: 0}
     - target: {fileID: 7453304238951872793, guid: ff52b5405b5af95418a0fb77c7ef3428, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.17
       objectReference: {fileID: 0}
     - target: {fileID: 7453304238951872793, guid: ff52b5405b5af95418a0fb77c7ef3428, type: 3}
       propertyPath: m_LocalPosition.z
@@ -13379,6 +13379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraMovementScript
   FollowSpeed: 2
   target: {fileID: 345006931}
+  cameraHieghtY: 1
 --- !u!1 &627827263
 GameObject:
   m_ObjectHideFlags: 0
@@ -14148,6 +14149,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 241638587}
   youWinScreen: {fileID: 627827263}
   scoreUi: {fileID: 1383364063}
+  plJump: {fileID: 0}
 --- !u!4 &1391668788
 Transform:
   m_ObjectHideFlags: 0
