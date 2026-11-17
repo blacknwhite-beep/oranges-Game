@@ -20,7 +20,7 @@ public class ScoreTriggerScript : MonoBehaviour
         if (collision.gameObject.layer == 3)
         {
             //logic.restartGame();
-            logic.addScore(2);
+            //logic.addScore(2);
         }
         
     }
