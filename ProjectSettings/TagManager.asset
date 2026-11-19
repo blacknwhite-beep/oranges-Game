@@ -6,6 +6,8 @@ TagManager:
   tags:
   - LogicManager
   - Ground
+  - CheckPoint
+  - GameOverScript
   layers:
   - Default
   - TransparentFX
