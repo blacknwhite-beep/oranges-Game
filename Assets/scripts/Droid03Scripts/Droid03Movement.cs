@@ -74,7 +74,7 @@ public class Droid03Movement : MonoBehaviour
             {
                 float dir = Mathf.Sign(dx);
                 rb.linearVelocity = new Vector2(dir * walkSpeed, rb.linearVelocity.y);
-                sr.flipX = dir < 0;
+                sr.flipX = dir > 0;
                 ChangeState("Droid03Move");
             }
             else

@@ -6,7 +6,7 @@ public class DroneHealth : MonoBehaviour
 
    
 
-    private Animator anim;
+    
 
 
 
@@ -17,7 +17,8 @@ public class DroneHealth : MonoBehaviour
     [SerializeField] private float explosionLifetime = 1f; // length of the explosion clip
     [SerializeField] private float deathDelay = 0.5f;
 
-    
+
+    private Animator anim;
     private Collider2D col;
     private DroneMovement1 movement;
 
@@ -35,11 +36,14 @@ public class DroneHealth : MonoBehaviour
         if (IsDead) return;
         IsDead = true;
 
-        anim.SetTrigger("Death");
-        col.enabled = false;
-        movement.enabled = false;   // stop detecting and chasing
+        if (anim != null) anim.SetTrigger("Death");
+        if (col != null) col.enabled = false;
+        if (movement != null) movement.enabled = false;   // stop detecting and chasing
 
         Invoke(nameof(Explode), deathDelay);
+
+        if (col == null)
+            Debug.LogWarning("DroneHealth: Drone_Enemy has no Collider2D, so the player can't hit it.", this);
     }
 
     private void Explode()
@@ -56,6 +60,7 @@ public class DroneHealth : MonoBehaviour
     {
         if (IsDead) return;
         currentHealth -= amount;
+        Debug.Log($"{name} took {amount} damage, {currentHealth} left");
         if (currentHealth <= 0f) Die();
     }
 

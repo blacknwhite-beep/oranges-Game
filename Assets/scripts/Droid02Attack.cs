@@ -45,6 +45,10 @@ public class Droid02Attack : MonoBehaviour
             anim.SetTrigger("Attack");
             nextAttackTime = Time.time + attackCooldown;
         }
+        else if (!attackZone.PlayerDetected)
+        {
+            anim.ResetTrigger("Attack");
+        }
     }
 
     private void DealDamage()

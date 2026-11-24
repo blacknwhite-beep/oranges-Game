@@ -1830,6 +1830,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 109211864283870597, guid: 8ba6f6731dbcf024a858746cd0d89270, type: 3}
+      propertyPath: spawnerPrefab
+      value: 
+      objectReference: {fileID: 5906901497846682578, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
     - target: {fileID: 5571366874829426775, guid: 8ba6f6731dbcf024a858746cd0d89270, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.916
@@ -1870,10 +1874,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7639669400965334399, guid: 8ba6f6731dbcf024a858746cd0d89270, type: 3}
-      propertyPath: m_LightVolumeEnabled
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8081610423717514434, guid: 8ba6f6731dbcf024a858746cd0d89270, type: 3}
       propertyPath: m_Name
       value: Drone_Enemy
@@ -1883,78 +1883,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8ba6f6731dbcf024a858746cd0d89270, type: 3}
---- !u!1001 &6836563991837459877
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.9392
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.106
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2475747866057632146, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5906901497846682578, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: drone
-      value: 
-      objectReference: {fileID: 8629165921922880459}
-    - target: {fileID: 7611854761384619879, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
-      propertyPath: m_Name
-      value: EnemySpawner
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: c45c1bb2df8002742b98f5f7846eb505, type: 3}
---- !u!114 &8629165921922880459 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3813431983961539638, guid: 8ba6f6731dbcf024a858746cd0d89270, type: 3}
-  m_PrefabInstance: {fileID: 2691981541681656926}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9985f0e925a9203478602efe014ce559, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -1968,4 +1896,3 @@ SceneRoots:
   - {fileID: 2124680170}
   - {fileID: 1662225314}
   - {fileID: 2691981541681656926}
-  - {fileID: 6836563991837459877}

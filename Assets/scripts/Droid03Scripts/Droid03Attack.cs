@@ -7,6 +7,8 @@ public class Droid03Attack : MonoBehaviour
     private Droid03Health health;
     private string currentState;
 
+    
+
 
     [Header("Shoot Zone")]
     public DetectionZone shootZone;   // can be the same DetectionZone as movement, or a separate one
@@ -70,6 +72,7 @@ public class Droid03Attack : MonoBehaviour
 
         // Aim at the target if we still have one, otherwise shoot the way we're facing
         float dir;
+        dir = GetComponent<SpriteRenderer>().flipX ? 1f : -1f;
         if (attackTarget != null)
             dir = Mathf.Sign(attackTarget.position.x - firePoint.position.x);
         else

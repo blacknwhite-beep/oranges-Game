@@ -22,6 +22,7 @@ public class Droid02Movement : MonoBehaviour
     [SerializeField] private GameObject SmokePrefab;
     [SerializeField] private float smokeInterval = 0.25f;
     [SerializeField] private Vector2 smokeOffset = new Vector2(0f, -0.4f);
+    [SerializeField] private float smokeLifetime = 0.5f;   // length of the smoke animation
     private float smokeTimer;
 
 
@@ -101,6 +102,8 @@ public class Droid02Movement : MonoBehaviour
             Vector3 pos = transform.position + new Vector3(-moveDir * smokeOffset.x * side, smokeOffset.y, 0f);
 
             GameObject smoke = Instantiate(SmokePrefab, pos, Quaternion.identity);
+            Destroy(smoke, smokeLifetime);   // set this to the smoke clip's length
+
 
             var smokeSr = smoke.GetComponent<SpriteRenderer>();
             if (smokeSr != null) smokeSr.flipX = moveDir > 0;
