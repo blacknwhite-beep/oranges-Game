@@ -36,6 +36,7 @@ public class PlayerHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         // Abort the damage completely if the player is invincible or already dead
+        Debug.Log($"{Time.time:F2} TakeDamage({damage}) invincible={isInvincible} hp={currentHealth}");
         if (isInvincible || currentHealth <= 0) return;
 
         currentHealth -= damage;
@@ -70,6 +71,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void ActivateInvincibility(float duration)
     {
+        Debug.Log($"{Time.time:F2} Invincibility ON for {duration}s", this);
         StopAllCoroutines();
         StartCoroutine(InvincibilityRoutine(duration));
     }

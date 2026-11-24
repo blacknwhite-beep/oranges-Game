@@ -3,6 +3,7 @@ using UnityEngine;
 public class Droid02Attack : MonoBehaviour
 {
     private Animator anim;
+   
 
     [Header("Attack Zone")]
     public DetectionZone attackZone;
@@ -20,6 +21,7 @@ public class Droid02Attack : MonoBehaviour
 
     public void SpawnExplosion()
     {
+        Debug.Log($"{Time.time:F2} SpawnExplosion (damage event)");
         if (explosionPrefab == null || firepoint == null) return;
         GameObject fx = Instantiate(explosionPrefab, firepoint.position, firepoint.rotation);
         Destroy(fx, 1f); // roughly the clip length
@@ -42,6 +44,7 @@ public class Droid02Attack : MonoBehaviour
 
         if (attackZone.PlayerDetected && Time.time >= nextAttackTime)
         {
+            Debug.Log($"{Time.time:F2} Attack triggered");
             anim.SetTrigger("Attack");
             nextAttackTime = Time.time + attackCooldown;
         }
@@ -54,10 +57,19 @@ public class Droid02Attack : MonoBehaviour
     private void DealDamage()
     {
         // Only hit if the player is still in range when the attack lands
-        if (!attackZone.PlayerDetected || attackZone.Target == null) return;
+        if (!attackZone.PlayerDetected || attackZone.Target == null) 
+        {
+            Debug.Log("DealDamage skipped: player not in AttackZone");
+            return; 
+        }
+        Debug.Log($"{Time.time:F2} Damage dealt");
 
         PlayerHealth playerHealth = attackZone.Target.GetComponentInParent<PlayerHealth>();
-        if (playerHealth != null)
-            playerHealth.TakeDamage(damage);
+        if (playerHealth == null)
+        {
+            Debug.LogWarning("DealDamage: no PlayerHealth found on " + attackZone.Target.name);
+            return;
+        }
+        playerHealth.TakeDamage(damage);
     }
 }
