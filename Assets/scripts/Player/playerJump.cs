@@ -32,10 +32,10 @@ public class playerJump : MonoBehaviour
 
     private void Jump()
     {
-        playerMovementState.SetMoveState(PlayerMovementState.MovementState.Jump);
         if (isGrounded)
         {
             // Standard Ground Jump
+            playerMovementState.SetMoveState(PlayerMovementState.MovementState.Jump);
             Rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
             canDoubleJump = true;
             _animator.SetBool("isJumping", true);
@@ -47,13 +47,16 @@ public class playerJump : MonoBehaviour
             // Wall Jump Check (prioritized over double jump if next to a wall)
             if (direction != 0)
             {
+                playerMovementState.SetMoveState(PlayerMovementState.MovementState.Jump);
                 wallJump(direction);
             }
-            // Double Jump Check
+            // Double Jump Check (DoubleJump sets the state itself)
             else if (canDoubleJump)
             {
                 DoubleJump();
             }
+            // No valid jump: do NOT play the Jump animation. Setting the state here
+            // used to strand the character in the falling pose on top of an enemy.
         }
     }
 
@@ -65,6 +68,15 @@ public class playerJump : MonoBehaviour
             // Tells the Animator the player has landed
             _animator.SetBool("isJumping", false);
             isGrounded = true;
+        }
+
+        // Enemies are not tagged "Ground", so landing on one used to leave the
+        // Jump animation running. Any solid contact while descending counts as a
+        // landing for the animation; jump physics still only use the Ground tag.
+        if (Rb2D.linearVelocity.y <= 0f)
+        {
+            _animator.SetBool("isJumping", false);
+            playerMovementState.NotifyLanded();
         }
     }
 

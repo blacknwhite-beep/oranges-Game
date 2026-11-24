@@ -40,7 +40,10 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!hasGun) return;
+        if (!hasGun || gun == null || Camera.main == null) return;
+
+        // Fire1 already maps to the left mouse button. Checking Mouse0 as well
+        // fired two bullets and played two sounds for a single click.
         if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
@@ -49,10 +52,6 @@ public class PlayerShooting : MonoBehaviour
         Vector3 direction = mousePos - gun.position;
 
         gun.rotation = Quaternion.Euler(new Vector3(0, 0, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
-        if (Input.GetKeyDown(KeyCode.Mouse0)) 
-        {
-            Shoot();
-        }
     }
     private void disableGun()
     {
@@ -69,11 +68,12 @@ public class PlayerShooting : MonoBehaviour
     }
     private void Shoot()
     {
-        // Implement shooting logic here
+        if (gunAnim == null || bulletprefab == null || firePoint == null) return;
         gunAnim.SetTrigger("Shoot");
         Debug.Log("Player shoots!");
         Instantiate(bulletprefab, firePoint.position, firePoint.rotation);
-        audioSource.PlayOneShot(gunShot);
+        if (audioSource != null && gunShot != null)
+            audioSource.PlayOneShot(gunShot);
     }
     
 }

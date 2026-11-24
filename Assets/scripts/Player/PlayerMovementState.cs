@@ -22,9 +22,31 @@ public class PlayerMovementState : MonoBehaviour
     [SerializeField] private Rigidbody2D rigidBody;
     public bool isAttacking = false;
     private float xPosLastFrame;
+
+    // FinishAttack / FinishHurt are animation events. They never fire if another
+    // animator.Play() interrupts the clip (for example jumping while attacking or
+    // landing on an enemy mid-swing), which used to strand the player in the Jump
+    // (falling) pose forever because Update() early-returned on isAttacking.
+    // These watchdogs guarantee the transient states always expire.
+    private const float attackStateTimeout = 0.85f; // longest attack clip is ~0.67 s
+    private const float hurtStateTimeout = 0.45f;   // Hurt clip is 0.25 s
+    private float transientStateStart;
+
     private void Update()
     {
         if (currentMovementState == MovementState.Death) return;
+
+        // Recover from interrupted attack / hurt animations before applying the
+        // "don't change state while busy" guard.
+        if (isAttacking && Time.time - transientStateStart > attackStateTimeout)
+        {
+            isAttacking = false;
+        }
+        if (currentMovementState == MovementState.Hurt && Time.time - transientStateStart > hurtStateTimeout)
+        {
+            FinishHurt();
+        }
+
         if (isAttacking || currentMovementState == MovementState.Hurt) return; // Prevents movement state changes while attacking or hurt
         float input = Input.GetAxisRaw("Horizontal");
 
@@ -123,29 +145,36 @@ public class PlayerMovementState : MonoBehaviour
     }
     public void HandleJump()
     {
+        // A jump interrupts any in-flight attack, so its FinishAttack event will
+        // not fire. Drop the stale lock now instead of getting stuck airborne.
+        isAttacking = false;
         currentMovementState = MovementState.Jump;
         animator.Play(jumpState);
     }
     public void HandleDoubleJump()
     {
+        isAttacking = false;
         currentMovementState = MovementState.DoubleJump;
         animator.Play(doubleJumpState);
     }
     public void HandleAttack1()
     {
         isAttacking = true;
+        transientStateStart = Time.time;
         currentMovementState = MovementState.Attack1;
         animator.Play(attack1State);
     }
     public void HandleAttack2()
     {
         isAttacking = true;
+        transientStateStart = Time.time;
         currentMovementState = MovementState.Attack2;
         animator.Play(attack2State);
     }
     public void HandleAttack3()
     {
         isAttacking = true;
+        transientStateStart = Time.time;
         currentMovementState = MovementState.Attack3;
         animator.Play(attack3State);
     }
@@ -155,6 +184,7 @@ public class PlayerMovementState : MonoBehaviour
         // If damage interrupts an attack, its FinishAttack animation event will
         // not run. Clear the flag so the player is not locked out of attacking.
         isAttacking = false;
+        transientStateStart = Time.time;
         currentMovementState = MovementState.Hurt;
         animator.Play(hurtState);
     }
@@ -190,6 +220,22 @@ public class PlayerMovementState : MonoBehaviour
     public void FinishHurt()
     {
         SetMoveState(MovementState.Idle);
+    }
+
+    /// <summary>
+    /// Called by playerJump whenever the player physically lands on any solid
+    /// surface, including enemies (which are not tagged "Ground"). Only touches
+    /// airborne states so a genuine attack or hurt animation is never cut short.
+    /// </summary>
+    public void NotifyLanded()
+    {
+        if (currentMovementState == MovementState.Death) return;
+        if (currentMovementState != MovementState.Jump && currentMovementState != MovementState.DoubleJump) return;
+
+        // Clear a stale attack lock left by an interrupted swing.
+        isAttacking = false;
+        bool moving = rigidBody != null && Mathf.Abs(rigidBody.linearVelocity.x) > 0.1f;
+        SetMoveState(moving ? MovementState.Run : MovementState.Idle);
     }
 
 }

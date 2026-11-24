@@ -227,7 +227,6 @@ MonoBehaviour:
   speed: 10
   _animator: {fileID: 4550218896818875666}
   dustParticles: {fileID: 4684065728679463526}
-  rigidbody: {fileID: 8264507071636212198}
 --- !u!114 &2095626203633271843
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,6 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   health: 10
   healthBar: {fileID: 0}
+  isInvincible: 0
 --- !u!114 &-7783167054747942396
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,11 +272,13 @@ MonoBehaviour:
   attack1Damage: 10
   attack2Damage: 15
   attack3Damage: 20
+  hitStopDuration: 0.12
+  comboHitVolume: 1
+  shakeDuration: 0.2
+  shakeMagnitude: 0.22
+  thirdHitShakeMultiplier: 1.8
   attackPoint: {fileID: 3818430465556149854}
   attackRange: 0.5
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!114 &1969386568969994683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -296,6 +298,8 @@ MonoBehaviour:
   bulletprefab: {fileID: 6279713842681430938, guid: 936f2c49592203b448003bede1bdcea1, type: 3}
   firePoint: {fileID: 1221468263961863018}
   hasGun: 0
+  audioSource: {fileID: 0}
+  gunShot: {fileID: 0}
 --- !u!1 &1350462965044525809
 GameObject:
   m_ObjectHideFlags: 0
@@ -2620,7 +2624,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.401, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3.1979408, y: 3.1979408, z: 3.1979408}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3821266685991961736}
@@ -2674,6 +2678,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 3644494930515279600, guid: b0d3d9ca5b99c934c856dac73463fd45, type: 3}
   youWinScreen: {fileID: 2958480799593998321, guid: 4f38f21f53873b946b170b5c1031535f, type: 3}
   scoreUi: {fileID: 8852940273163490451, guid: d522b850108f58049a90ab278e85fe59, type: 3}
+  plJump: {fileID: 0}
 --- !u!1 &5604991182438480142
 GameObject:
   m_ObjectHideFlags: 0
