@@ -22,7 +22,7 @@ public class YouWInScript : MonoBehaviour
         {
 
             logic.youWin();
-
+            Debug.Log("Logic.youWin() called");
         }
 
     }

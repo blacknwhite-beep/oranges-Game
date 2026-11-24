@@ -5,12 +5,14 @@ using System.Collections;
 
 public class LogicManager : MonoBehaviour
 {
-    public int playerScore = 0;
-    public Text scoreText;
+    public GameObject player;
+    public int playerLives = 3;
+    public Text livesText;
     public GameObject gameOverScreen;
     public GameObject youWinScreen;
-    public GameObject scoreUi;
-    public playerJump plJump;
+    public GameObject livesUi;
+    
+
     
 
     
@@ -29,12 +31,11 @@ public class LogicManager : MonoBehaviour
 
 
 
-    [ContextMenu("Add Score")]
-    public void addScore(int scoreToAdd)
+    [ContextMenu("Lives Left")]
+    public void updateLives(int livesLost)
     {
-        scoreUi.SetActive(true);
-        playerScore += scoreToAdd;
-        scoreText.text = playerScore.ToString();
+        playerLives -= livesLost;
+        livesText.text = playerLives.ToString();
     }
 
     [ContextMenu("RestartGame")]
@@ -50,6 +51,7 @@ public class LogicManager : MonoBehaviour
 
     public void youWin()
     {
+        Debug.Log("You Win Triggered");
         youWinScreen.SetActive(true);
     }
 
