@@ -9,8 +9,9 @@ public class playerJump : MonoBehaviour
     [SerializeField] private float doubleJumpForce;
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Vector2 wallJumpForce = new Vector2(5f, 5f); // Force applied during wall jump
+     public PlayerLevelManager levelManager;
 
-    private bool canDoubleJump;
+    public bool canDoubleJump;
     private bool isGrounded;
     private float playerHalfWidth;
 
@@ -68,6 +69,7 @@ public class playerJump : MonoBehaviour
         }
     }
 
+
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
@@ -107,11 +109,16 @@ public class playerJump : MonoBehaviour
 
     private void DoubleJump()
     {
-        Rb2D.linearVelocity = new Vector2(Rb2D.linearVelocity.x, 0f); // Reset vertical velocity before double jump
-        Rb2D.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
-        canDoubleJump = false;
-        _animator.SetBool("isJumping", true);
+        if(levelManager.playerLevel >= 2)
+        {
+            Rb2D.linearVelocity = new Vector2(Rb2D.linearVelocity.x, 0f); // Reset vertical velocity before double jump
+            Rb2D.AddForce(Vector2.up * doubleJumpForce, ForceMode2D.Impulse);
+            canDoubleJump = false;
+            _animator.SetBool("isJumping", true);
 
-        playerMovementState.SetMoveState(PlayerMovementState.MovementState.DoubleJump);
+            playerMovementState.SetMoveState(PlayerMovementState.MovementState.DoubleJump);
+        }
+        
+
     }
 }

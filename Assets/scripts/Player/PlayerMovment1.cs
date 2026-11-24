@@ -6,7 +6,7 @@ public class PlayerMovment1 : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Rigidbody2D playerRb;
     [SerializeField] private SpriteRenderer spriteRenderer;
-    [SerializeField] private float speed = 5f;
+    [SerializeField] public float speed = 5f;
     [SerializeField] private Animator _animator;
     [SerializeField] private ParticleSystem dustParticles;
     [SerializeField] private Rigidbody2D rigidbody;

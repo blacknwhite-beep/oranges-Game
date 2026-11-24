@@ -11,7 +11,7 @@ public class LogicManager : MonoBehaviour
     public GameObject gameOverScreen;
     public GameObject youWinScreen;
     public GameObject livesUi;
-    public playerJump plJump;
+    
 
     
 
